@@ -1,5 +1,5 @@
-import { Offers } from "@/types/offer";
-import { Link } from "react-router-dom";
+import { Offers } from '@/types/offer';
+import { Link } from 'react-router-dom';
 
 type HeaderProps = {
   offers: Offers;
@@ -37,5 +37,5 @@ export function Header({offers}: HeaderProps) : JSX.Element {
         </div>
       </div>
     </header>
-  )
+  );
 }

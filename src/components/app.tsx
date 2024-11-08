@@ -19,26 +19,29 @@ export function App({ placesCount, offers }: AppProps): JSX.Element {
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element = {
-            <MainPage
-              placesCount={placesCount}
-              offers={offers}
-            />
+          <Route path='/' element =
+            {
+              <MainPage
+                placesCount={placesCount}
+                offers={offers}
+              />
             }
           />
           <Route path='login' element = {<LoginPage/>}/>
-          <Route path='offer/:id' element = {
-            <OfferPage
-              offers={offers}
-            />
-            }
-          />
-          <Route path='favorites' element = {
-            <PrivateRoute authStatus={AuthStatus.Auth}>
-              <FavoritesPage
+          <Route path='offer/:id' element =
+            {
+              <OfferPage
                 offers={offers}
               />
-            </PrivateRoute>
+            }
+          />
+          <Route path='favorites' element =
+            {
+              <PrivateRoute authStatus={AuthStatus.Auth}>
+                <FavoritesPage
+                  offers={offers}
+                />
+              </PrivateRoute>
             }
           />
           <Route path='*' element = {<NotFoundPage/>}/>

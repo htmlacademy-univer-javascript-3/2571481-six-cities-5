@@ -1,9 +1,9 @@
-import { Offers } from "@/types/offer";
-import { RentOfferCard } from "./rent-offer-card";
-import { useState } from "react";
+import { Offers } from '@/types/offer';
+import { RentOfferCard } from './rent-offer-card';
+import { useState } from 'react';
 
 type OffersListProps = {
-    offers: Offers;
+  offers: Offers;
 };
 
 export function OffersList({offers} : OffersListProps) : JSX.Element {
@@ -16,16 +16,15 @@ export function OffersList({offers} : OffersListProps) : JSX.Element {
   const onMouseLeave = () => {
     setActiveOfferId(null);
   };
-  
   return(
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => <RentOfferCard
+      {offers.map((offer) => (
+        <RentOfferCard
           key={offer.id}
           offer = {offer}
           onMouseEnter={() => onMouseEnter(offer.id)}
           onMouseLeave={onMouseLeave}
-        />
-      )}
+        />))}
     </div>
   );
 }

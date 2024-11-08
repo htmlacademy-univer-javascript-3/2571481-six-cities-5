@@ -19,7 +19,7 @@ export default function ReviewForm(): JSX.Element {
     setFormData({...formData, [name]: value});
   };
 
-  function starsRender(rating : 1|2|3|4|5 ) {
+  function starsRender(rating: 1|2|3|4|5) {
     const title = titlesForRate[rating];
     return (
       <Fragment>

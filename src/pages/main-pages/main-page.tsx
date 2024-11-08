@@ -4,8 +4,8 @@ import { Offers } from '@/types/offer';
 import { Helmet } from 'react-helmet-async';
 
 type MainPageProps = {
-  placesCount : number,
-  offers : Offers
+  placesCount : number;
+  offers : Offers;
 }
 
 export function MainPage({placesCount, offers} : MainPageProps): JSX.Element {

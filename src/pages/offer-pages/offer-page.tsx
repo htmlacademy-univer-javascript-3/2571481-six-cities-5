@@ -1,7 +1,7 @@
-import { Header } from "@/components/header";
-import ReviewForm from "@/components/review-form";
-import { Offers } from "@/types/offer";
-import { Helmet } from "react-helmet-async";
+import { Header } from '@/components/header';
+import ReviewForm from '@/components/review-form';
+import { Offers } from '@/types/offer';
+import { Helmet } from 'react-helmet-async';
 
 type OfferPageProps = {
   offers: Offers;
