@@ -1,34 +1,28 @@
 import { Offer } from '@/types/offer';
 import { Link } from 'react-router-dom';
 
-type RentOfferCardProps = {
+type FavoriteOfferCardProps = {
   offer: Offer;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
 }
 
-export function RentOfferCard({offer, onMouseEnter, onMouseLeave}: RentOfferCardProps): JSX.Element {
+export function FavoriteOfferCard({offer}: FavoriteOfferCardProps): JSX.Element {
   return(
-    <article
-      className="cities__card place-card"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
+    <article className="favorites__card place-card">
       {offer.isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.imageUrl}
-            width="260" height="200"
+            width="150" height="110"
             alt="Place image"
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>
