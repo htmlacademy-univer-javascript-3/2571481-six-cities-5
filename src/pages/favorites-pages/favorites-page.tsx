@@ -1,5 +1,6 @@
-import { FavoriteOfferCard } from '@/components/cards/favorites-offer-card';
 import { Header } from '@/components/header';
+import { RentOfferCard } from '@/components/rent-offer-card';
+import { CardType } from '@/constants';
 import { Offers } from '@/types/offer';
 import { Helmet } from 'react-helmet-async';
 
@@ -30,7 +31,15 @@ export function FavoritesPage({offers} : FavoritesScreenProps): JSX.Element{
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {favorites.map((offer) => <FavoriteOfferCard key={offer.id} offer={offer}/>)}
+                  {favorites.map((offer) => (
+                    <RentOfferCard
+                      key={offer.id}
+                      offer={offer}
+                      onMouseEnter={()=>{}}
+                      onMouseLeave={()=>{}}
+                      cardType={CardType.Favorites}
+                    />
+                  ))}
                 </div>
               </li>
               <li className="favorites__locations-items">

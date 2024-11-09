@@ -8,13 +8,15 @@ import { PrivateRoute } from '@/components/private-route';
 import { AuthStatus } from '@/constants';
 import { FavoritesPage } from '@/pages/favorites-pages/favorites-page';
 import { Offers } from '@/types/offer';
+import { Reviews } from '@/types/review';
 
 type AppProps = {
   placesCount: number;
   offers: Offers;
+  reviews: Reviews;
 }
 
-export function App({ placesCount, offers }: AppProps): JSX.Element {
+export function App({ placesCount, offers, reviews }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -32,6 +34,7 @@ export function App({ placesCount, offers }: AppProps): JSX.Element {
             {
               <OfferPage
                 offers={offers}
+                reviews={reviews}
               />
             }
           />
