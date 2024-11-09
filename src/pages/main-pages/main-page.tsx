@@ -1,6 +1,9 @@
 import { Header } from '@/components/header';
+import Map from '@/components/map';
 import { OffersList } from '@/components/offersList';
+import { CityName, getCityByName } from '@/types/city';
 import { Offers } from '@/types/offer';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 type MainPageProps = {
@@ -9,6 +12,9 @@ type MainPageProps = {
 }
 
 export function MainPage({placesCount, offers} : MainPageProps): JSX.Element {
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
+  const activeOffer = offers.find((offer) => offer.id === activeOfferId);
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -73,10 +79,10 @@ export function MainPage({placesCount, offers} : MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers}/>
+              <OffersList offers={offers} onActiveOfferChange={setActiveOfferId}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={getCityByName(CityName.AMSTERDAM)} offers={offers} selectedOffer={activeOffer}/>
             </div>
           </div>
         </div>

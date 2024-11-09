@@ -1,29 +1,35 @@
 import { Offers } from '@/types/offer';
-import { RentOfferCard } from './rent-offer-card';
-import { useState } from 'react';
+import { RentOfferCard } from './cards/rent-offer-card';
+import { useEffect, useState } from 'react';
 
 type OffersListProps = {
   offers: Offers;
+  onActiveOfferChange: (offerId: string | null) => void;
 };
 
-export function OffersList({offers} : OffersListProps) : JSX.Element {
-  const [/*activeOfferId*/, setActiveOfferId] = useState<string | null>(null);
+export function OffersList({offers, onActiveOfferChange} : OffersListProps) : JSX.Element {
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
-  const onMouseEnter = (offerId: string) => {
+  useEffect(() => {
+    onActiveOfferChange(activeOfferId);
+  }, [activeOfferId, onActiveOfferChange]);
+
+  const handleMouseEnter = (offerId: string) => {
     setActiveOfferId(offerId);
   };
 
-  const onMouseLeave = () => {
+  const handleMouseLeave = () => {
     setActiveOfferId(null);
   };
+
   return(
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
         <RentOfferCard
           key={offer.id}
           offer = {offer}
-          onMouseEnter={() => onMouseEnter(offer.id)}
-          onMouseLeave={onMouseLeave}
+          onMouseEnter={() => handleMouseEnter(offer.id)}
+          onMouseLeave={handleMouseLeave}
         />))}
     </div>
   );

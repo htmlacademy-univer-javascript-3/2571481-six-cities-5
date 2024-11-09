@@ -1,4 +1,4 @@
-import { FavoriteOfferCard } from '@/components/favorites-offer-card';
+import { FavoriteOfferCard } from '@/components/cards/favorites-offer-card';
 import { Header } from '@/components/header';
 import { Offers } from '@/types/offer';
 import { Helmet } from 'react-helmet-async';
