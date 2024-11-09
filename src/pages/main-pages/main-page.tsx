@@ -79,10 +79,10 @@ export function MainPage({placesCount, offers} : MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers} onActiveOfferChange={setActiveOfferId}/>
+              <OffersList offers={offers} onActiveOfferChange={setActiveOfferId} className='cities__places-list places__list tabs__content'/>
             </section>
             <div className="cities__right-section">
-              <Map city={getCityByName(CityName.AMSTERDAM)} offers={offers} selectedOffer={activeOffer}/>
+              <Map city={getCityByName(CityName.AMSTERDAM)} offers={offers} selectedOffer={activeOffer} className={'cities__map'}/>
             </div>
           </div>
         </div>

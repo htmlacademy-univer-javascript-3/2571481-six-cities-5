@@ -1,13 +1,15 @@
 import { Offers } from '@/types/offer';
-import { RentOfferCard } from './cards/rent-offer-card';
+import { RentOfferCard } from './rent-offer-card';
 import { useEffect, useState } from 'react';
+import { CardType } from '@/constants';
 
 type OffersListProps = {
   offers: Offers;
   onActiveOfferChange: (offerId: string | null) => void;
+  className: string;
 };
 
-export function OffersList({offers, onActiveOfferChange} : OffersListProps) : JSX.Element {
+export function OffersList({offers, onActiveOfferChange, className} : OffersListProps) : JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -23,13 +25,14 @@ export function OffersList({offers, onActiveOfferChange} : OffersListProps) : JS
   };
 
   return(
-    <div className="cities__places-list places__list tabs__content">
+    <div className={className}>
       {offers.map((offer) => (
         <RentOfferCard
           key={offer.id}
           offer = {offer}
           onMouseEnter={() => handleMouseEnter(offer.id)}
           onMouseLeave={handleMouseLeave}
+          cardType={CardType.Cities}
         />))}
     </div>
   );

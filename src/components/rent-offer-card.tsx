@@ -1,28 +1,37 @@
+import { CardImageWrapper, CardType } from '@/constants';
 import { Offer } from '@/types/offer';
 import { Link } from 'react-router-dom';
 
-type FavoriteOfferCardProps = {
+type RentOfferCardProps = {
   offer: Offer;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+  cardType: CardType;
 }
 
-export function FavoriteOfferCard({offer}: FavoriteOfferCardProps): JSX.Element {
+export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: RentOfferCardProps): JSX.Element {
   return(
-    <article className="favorites__card place-card">
+    <article
+      className={`${cardType} place-card`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {offer.isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}
-      <div className="favorites__image-wrapper place-card__image-wrapper">
+      <div className={`${CardImageWrapper[cardType]} place-card__image-wrapper`}>
         <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.imageUrl}
-            width="150" height="110"
+            width={cardType === CardType.Favorites ? 150 : 260}
+            height={cardType === CardType.Favorites ? 110 : 200}
             alt="Place image"
           />
         </Link>
       </div>
-      <div className="favorites__card-info place-card__info">
+      <div className={`${cardType === CardType.Favorites ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>
