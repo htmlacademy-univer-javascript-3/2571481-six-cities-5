@@ -1,4 +1,5 @@
 import { PlaceType } from '@/constants';
+import { CityName, getCityByName } from '@/types/city';
 import { Offers } from '@/types/offer';
 
 export const offers: Offers = [
@@ -11,16 +12,10 @@ export const offers: Offers = [
     type : PlaceType.Apartment,
     isPremium : true,
     isFavorite : false,
-    city : {
-      name : 'Amsterdam',
-      location : {
-        latitude : 52.373036,
-        longitude : 4.892413
-      }
-    },
+    city : getCityByName(CityName.AMSTERDAM),
     location : {
-      latitude : 52.373036,
-      longitude : 4.892413
+      lt : 52.3909553943508,
+      lg : 4.85309666406198
     },
   },
   {
@@ -32,16 +27,10 @@ export const offers: Offers = [
     type : PlaceType.Room,
     isPremium : false,
     isFavorite : true,
-    city : {
-      name : 'Amsterdam',
-      location : {
-        latitude : 52.373036,
-        longitude : 4.892413
-      }
-    },
+    city : getCityByName(CityName.AMSTERDAM),
     location : {
-      latitude : 52.373036,
-      longitude : 4.892413
+      lt : 52.3609553943508,
+      lg : 4.85309666406198
     },
   },
   {
@@ -53,16 +42,10 @@ export const offers: Offers = [
     type : PlaceType.Apartment,
     isPremium : false,
     isFavorite : true,
-    city : {
-      name : 'Amsterdam',
-      location : {
-        latitude : 52.373036,
-        longitude : 4.892413
-      }
-    },
+    city : getCityByName(CityName.AMSTERDAM),
     location : {
-      latitude : 52.373036,
-      longitude : 4.892413
+      lt : 52.3909553943508,
+      lg : 4.929309666406198
     },
   },
   {
@@ -74,16 +57,10 @@ export const offers: Offers = [
     type : PlaceType.Apartment,
     isPremium : true,
     isFavorite : false,
-    city : {
-      name : 'Amsterdam',
-      location : {
-        latitude : 52.373036,
-        longitude : 4.892413
-      }
-    },
+    city : getCityByName(CityName.AMSTERDAM),
     location : {
-      latitude : 52.373036,
-      longitude : 4.892413
+      lt : 52.3809553943508,
+      lg : 4.939309666406198
     },
   },
 ];
