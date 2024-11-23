@@ -27,6 +27,6 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offersList = offers;
     })
     .addCase(setReviews, (state) => {
-        state.reviews = reviews;
+      state.reviews = reviews;
     });
 });
