@@ -1,4 +1,4 @@
-import { Reviews } from '@/types/review';
+import { Reviews } from '@appTypes/review';
 import ReviewsItem from './reviews-item';
 
 

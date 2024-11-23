@@ -1,5 +1,5 @@
-import { CardImageWrapper, CardType } from '@/constants';
-import { Offer } from '@/types/offer';
+import { CardImageWrapper, CardType } from '@const';
+import { Offer } from '@appTypes/offer';
 import { Link } from 'react-router-dom';
 
 type RentOfferCardProps = {

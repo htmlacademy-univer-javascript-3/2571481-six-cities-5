@@ -1,19 +1,16 @@
-import { Header } from '@/components/header';
-import ReviewForm from '@/components/review-form';
-import ReviewsList from '@/components/reviewsList';
-import { Offers } from '@/types/offer';
-import { Reviews } from '@/types/review';
+import { Header } from '@components/header';
+import ReviewForm from '@components/review-form';
+import ReviewsList from '@components/reviewsList';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import Map from '@/components/map';
-import { OffersList } from '@/components/offersList';
+import Map from '@components/map';
+import { OffersList } from '@components/offersList';
+import { useAppSelector } from '@hooks/index';
 
-type OfferPageProps = {
-  offers: Offers;
-  reviews: Reviews;
-};
 
-export function OfferPage({offers, reviews} : OfferPageProps): JSX.Element {
+export function OfferPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offersList);
+  const reviews = useAppSelector((state) => state.reviews);
   const params = useParams();
   const curentOffer = offers.find((item) => item.id === params.id) ?? offers[0];
   const nearbyOffers = offers.filter(
@@ -152,7 +149,6 @@ export function OfferPage({offers, reviews} : OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          {/* чекнуть тз и понять как отрисовывать карту - с подсвеченной текущей локой или сделать как на главной, но без текущей локи в принципе */}
           <Map city={curentOffer.city} offers={offers} selectedOffer={curentOffer} className={'offer__map'} />
         </section>
         <div className="container">

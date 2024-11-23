@@ -1,7 +1,7 @@
 import { Location } from './location';
 
 export type City = {
-  name: string;
+  name: CityName;
   location: Location;
 };
 
@@ -13,6 +13,8 @@ export enum CityName {
   HAMBURG = 'Hamburg',
   DUSSELDORF = 'Dusseldorf',
 }
+
+export const Cities = Object.values(CityName);
 
 const citiesMap: Record<CityName, City> = {
   [CityName.PARIS]: {
