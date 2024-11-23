@@ -1,4 +1,4 @@
-import { AuthStatus } from '@/constants';
+import { AuthStatus } from '@const';
 import { Navigate } from 'react-router-dom';
 
 type PrivateRouteProps = {

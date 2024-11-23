@@ -6,7 +6,9 @@ export enum AuthStatus {
 
 export enum PlaceType {
   Room = 'Room',
-  Apartment = 'Apartment'
+  Apartment = 'Apartment',
+  House = 'House',
+  Hotel = 'Hotel'
 }
 
 export const URL_MARKER_DEFAULT = '/img/pin.svg';

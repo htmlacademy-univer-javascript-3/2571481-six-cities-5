@@ -1,4 +1,4 @@
-import { Offers } from '@/types/offer';
+import { Offers } from '@appTypes/offer';
 import { Link } from 'react-router-dom';
 
 type HeaderProps = {

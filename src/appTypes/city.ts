@@ -14,6 +14,8 @@ export enum CityName {
   DUSSELDORF = 'Dusseldorf',
 }
 
+export const Cities = Object.values(CityName);
+
 const citiesMap: Record<CityName, City> = {
   [CityName.PARIS]: {
     name: CityName.PARIS,

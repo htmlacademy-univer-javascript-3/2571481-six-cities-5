@@ -1,6 +1,6 @@
-import { PlaceType } from '@/constants';
-import { CityName, getCityByName } from '@/types/city';
-import { Offers } from '@/types/offer';
+import { PlaceType } from '@const';
+import { CityName, getCityByName } from '@appTypes/city';
+import { Offers } from '@appTypes/offer';
 
 export const offers: Offers = [
   {

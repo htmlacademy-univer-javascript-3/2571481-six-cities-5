@@ -1,5 +1,5 @@
 import { City } from './city';
-import { PlaceType } from '../constants';
+import { PlaceType } from '@const';
 import { Location } from './location';
 
 export type Offer = {

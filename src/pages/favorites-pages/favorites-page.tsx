@@ -1,14 +1,11 @@
-import { Header } from '@/components/header';
-import { RentOfferCard } from '@/components/rent-offer-card';
-import { CardType } from '@/constants';
-import { Offers } from '@/types/offer';
+import { Header } from '@components/header';
+import { RentOfferCard } from '@components/rent-offer-card';
+import { CardType } from '@const';
+import { useAppSelector } from '@hooks/index';
 import { Helmet } from 'react-helmet-async';
 
-type FavoritesScreenProps = {
-  offers: Offers;
-};
-
-export function FavoritesPage({offers} : FavoritesScreenProps): JSX.Element{
+export function FavoritesPage(): JSX.Element{
+  const offers = useAppSelector((state) => state.offersList);
   const favorites = offers.filter((offer) => offer.isFavorite);
 
   return(

@@ -1,7 +1,7 @@
-import { Offers } from '@/types/offer';
+import { Offers } from '@appTypes/offer';
 import { RentOfferCard } from './rent-offer-card';
 import { useEffect, useState } from 'react';
-import { CardType } from '@/constants';
+import { CardType } from '@const';
 
 type OffersListProps = {
   offers: Offers;
