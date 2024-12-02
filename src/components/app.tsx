@@ -7,13 +7,17 @@ import {HelmetProvider} from 'react-helmet-async';
 import { PrivateRoute } from '@components/private-route';
 import { AuthStatus } from '@const';
 import { FavoritesPage } from '@pages/favorites-pages/favorites-page';
-import { useAppDispatch, useAppSelector } from '@hooks/index';
-import { setOffersList } from '@store/action';
+import { useAppSelector } from '@hooks/index';
+import { LoadingScreen } from '@pages/loading-screen/loading-screen';
 
 export function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offersList);
-  const dispatch = useAppDispatch();
-  dispatch(setOffersList(offers));
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <HelmetProvider>

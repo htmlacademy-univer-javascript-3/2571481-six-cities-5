@@ -1,48 +1,57 @@
 import { Location } from './location';
 
 export type City = {
-  name: CityName;
+  name: string;
   location: Location;
 };
 
-export enum CityName {
-  PARIS = 'Paris',
-  COLOGNE = 'Cologne',
-  BRUSSELS = 'Brussels',
-  AMSTERDAM = 'Amsterdam',
-  HAMBURG = 'Hamburg',
-  DUSSELDORF = 'Dusseldorf',
-}
-
-export const Cities = Object.values(CityName);
-
-const citiesMap: Record<CityName, City> = {
-  [CityName.PARIS]: {
-    name: CityName.PARIS,
-    location: { lt: 48.856663, lg: 2.351556 },
+export const Cities: City[] = [
+  {
+    name: 'Paris',
+    location: {
+      latitude: 48.85661,
+      longitude: 2.351499,
+      zoom: 13
+    }
   },
-  [CityName.COLOGNE]: {
-    name: CityName.COLOGNE,
-    location: { lt: 50.930779, lg: 6.938399 },
+  {
+    name: 'Cologne',
+    location: {
+      latitude: 50.930779,
+      longitude: 6.938399,
+      zoom: 12
+    }
   },
-  [CityName.BRUSSELS]: {
-    name: CityName.BRUSSELS,
-    location: { lt: 50.846697, lg: 4.352544 },
+  {
+    name: 'Brussels',
+    location: {
+      latitude: 50.846697,
+      longitude: 4.352544,
+      zoom: 12
+    }
   },
-  [CityName.AMSTERDAM]: {
-    name: CityName.AMSTERDAM,
-    location: { lt: 52.373036, lg: 4.892413 },
+  {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.373036,
+      longitude: 4.892413,
+      zoom: 12
+    }
   },
-  [CityName.HAMBURG]: {
-    name: CityName.HAMBURG,
-    location: { lt: 53.550688, lg: 9.992895 },
+  {
+    name: 'Hamburg',
+    location: {
+      latitude: 53.550688,
+      longitude: 9.992895,
+      zoom: 12
+    }
   },
-  [CityName.DUSSELDORF]: {
-    name: CityName.DUSSELDORF,
-    location: { lt: 51.230569, lg: 6.787428 },
-  },
-} as const;
-
-export function getCityByName(cityName: CityName): City {
-  return citiesMap[cityName];
-}
+  {
+    name: 'Dusseldorf',
+    location: {
+      latitude: 51.230569,
+      longitude: 6.787428,
+      zoom: 12
+    }
+  }
+] as const;

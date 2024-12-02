@@ -10,10 +10,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map |
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
-          lat: city.location.lt,
-          lng: city.location.lg
+          lat: city.location.latitude,
+          lng: city.location.longitude
         },
-        zoom: 12
+        zoom: city.location.zoom
       });
 
       const layer = new TileLayer(
@@ -31,10 +31,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map |
     } else if (map) {
       map.setView(
         {
-          lat: city.location.lt,
-          lng: city.location.lg,
+          lat: city.location.latitude,
+          lng: city.location.longitude,
         },
-        12
+        city.location.zoom
       );
     }
   }, [mapRef, map, city]);

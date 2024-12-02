@@ -24,7 +24,7 @@ export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: Ren
         <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
-            src={offer.imageUrl}
+            src={offer.previewImage}
             width={cardType === CardType.Favorites ? 150 : 260}
             height={cardType === CardType.Favorites ? 110 : 200}
             alt="Place image"
@@ -51,7 +51,7 @@ export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: Ren
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${offer.id}`}>{offer.name}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

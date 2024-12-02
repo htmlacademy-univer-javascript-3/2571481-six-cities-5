@@ -1,7 +1,7 @@
 import { Header } from '@components/header';
 import Map from '@components/map';
 import { OffersList } from '@components/offersList';
-import { Cities, getCityByName } from '@appTypes/city';
+import { Cities } from '@appTypes/city';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '@hooks/index';
@@ -12,12 +12,12 @@ export function MainPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offersList);
   const city = useAppSelector((state) => state.city);
 
-  const [currentCityOffers, setCurrentCityOffers] = useState<Offers>(offers);
+  const [currentCityOffers, setCurrentCityOffers] = useState<Offers>([]);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   const activeOffer = offers.find((offer) => offer.id === activeOfferId);
   useEffect(() => {
-    const filteredOffers = offers.filter((offer) => offer.city.name === city);
+    const filteredOffers = offers.filter((offer) => offer.city.name === city.name);
     setCurrentCityOffers(filteredOffers);
   }, [city, offers]);
 
@@ -38,7 +38,7 @@ export function MainPage(): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{`${currentCityOffers.length} places to stay in ${city}`}</b>
+              <b className="places__found">{`${currentCityOffers.length} places to stay in ${city.name}`}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -57,7 +57,7 @@ export function MainPage(): JSX.Element {
               <OffersList offers={currentCityOffers} onActiveOfferChange={setActiveOfferId} className='cities__places-list places__list tabs__content'/>
             </section>
             <div className="cities__right-section">
-              <Map city={getCityByName(city)} offers={currentCityOffers} selectedOffer={activeOffer} className={'cities__map'}/>
+              <Map city={city} offers={currentCityOffers} selectedOffer={activeOffer} className={'cities__map'}/>
             </div>
           </div>
         </div>
