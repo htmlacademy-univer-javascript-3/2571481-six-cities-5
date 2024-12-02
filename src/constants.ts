@@ -4,13 +4,6 @@ export enum AuthStatus {
   Unknown = 'UNKNOWN'
 }
 
-export enum PlaceType {
-  Room = 'Room',
-  Apartment = 'Apartment',
-  House = 'House',
-  Hotel = 'Hotel'
-}
-
 export const URL_MARKER_DEFAULT = '/img/pin.svg';
 
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';
@@ -26,3 +19,11 @@ export const CardImageWrapper = {
   [CardType.Nearest]: 'near-places__image-wrapper',
   [CardType.Favorites]: 'favorites__image-wrapper',
 } as const;
+
+export enum APIRoute {
+  Offers = '/offers',
+  Favorites = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}

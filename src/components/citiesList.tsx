@@ -1,15 +1,15 @@
-import { CityName } from '@appTypes/city';
+import { City } from '@appTypes/city';
 import { useAppDispatch } from '@hooks/index';
 import { changeCity } from '@store/action';
 
 type CitiesListProps = {
-  cities: CityName[];
+  cities: City[];
 };
 
 export function CitiesList({ cities }: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handleCityChange = (city: CityName) => {
+  const handleCityChange = (city: City) => {
     dispatch(changeCity(city));
   };
 
@@ -17,12 +17,12 @@ export function CitiesList({ cities }: CitiesListProps): JSX.Element {
     <ul className="locations__list tabs__list">
       {cities.map((city) => (
         <li
-          key={city}
+          key={city.name}
           className="locations__item"
           onClick={() => handleCityChange(city)}
         >
           <a className="locations__item-link tabs__item" href="#">
-            <span>{city}</span>
+            <span>{city.name}</span>
           </a>
         </li>
       ))}

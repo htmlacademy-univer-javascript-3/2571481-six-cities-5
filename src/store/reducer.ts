@@ -1,21 +1,21 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setOffersList, changeCity, setReviews } from './action';
+import { setOffersList, changeCity, setReviews, setOffersDataLoadingStatus } from './action';
 import { Offers } from '@appTypes/offer';
-import { offers } from '@mocks/offers';
-import { CityName } from '@appTypes/city';
 import { Reviews } from '@appTypes/review';
-import { reviews } from '@mocks/reviews';
+import { Cities, City } from '@appTypes/city';
 
 type StateType = {
-  city: CityName;
+  city: City;
   offersList: Offers;
   reviews: Reviews;
+  isOffersDataLoading: boolean;
 };
 
 const initialState: StateType = {
-  city: CityName.PARIS,
+  city: Cities[0],
   offersList: [],
-  reviews: reviews,
+  reviews: [],
+  isOffersDataLoading: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -23,10 +23,13 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(changeCity, (state, { payload }) => {
       state.city = payload;
     })
-    .addCase(setOffersList, (state) => {
-      state.offersList = offers;
+    .addCase(setOffersList, (state, { payload }) => {
+      state.offersList = payload;
     })
-    .addCase(setReviews, (state) => {
-      state.reviews = reviews;
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
+    })
+    .addCase(setReviews, (state, { payload }) => {
+      state.reviews = payload;
     });
 });

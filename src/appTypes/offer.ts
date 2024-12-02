@@ -1,18 +1,17 @@
 import { City } from './city';
-import { PlaceType } from '@const';
 import { Location } from './location';
 
 export type Offer = {
     id: string;
-    imageUrl: string;
+    title: string;
+    type: string;
     price: number;
-    rating: number;
-    name: string;
-    type: PlaceType;
-    isPremium: boolean;
-    isFavorite: boolean;
     city: City;
     location: Location;
+    isFavorite: boolean;
+    isPremium: boolean;
+    rating: number;
+    previewImage: string;
 };
 
 export type Offers = Offer[];
