@@ -54,4 +54,4 @@ export const Cities: City[] = [
       zoom: 12
     }
   }
-] as const;
+];
