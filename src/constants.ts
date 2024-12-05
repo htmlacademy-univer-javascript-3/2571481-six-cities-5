@@ -4,6 +4,12 @@ export enum AuthStatus {
   Unknown = 'UNKNOWN'
 }
 
+export enum AppRoute {
+  Login = '/login',
+  MainPage = '/',
+  Favorites = '/favorites',
+}
+
 export const URL_MARKER_DEFAULT = '/img/pin.svg';
 
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';

@@ -1,9 +1,11 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '@appTypes/state';
-import { APIRoute } from '@const';
+import { APIRoute, AppRoute, AuthStatus } from '@const';
 import { Offers } from '@appTypes/offer';
-import { setOffersDataLoadingStatus, setOffersList } from './action';
+import { redirectToRoute, requireAuth, setOffersDataLoadingStatus, setOffersList } from './action';
+import { AuthData, User } from '@appTypes/user';
+import { saveToken, dropToken } from '@services/token';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -20,7 +22,7 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   },
 );
 
-/* export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -31,7 +33,7 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
       await api.get(APIRoute.Login);
       dispatch(requireAuth(AuthStatus.Auth));
     } catch {
-      dispatch(requireAuth(AuthStatus.NoAuth));
+      dispatch(requireAuth(AuthStatus.NotAuth));
     }
   },
 );
@@ -42,10 +44,15 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   extra: AxiosInstance;
 }>(
   'user/login',
-  async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+  async (AuthData, {dispatch, extra: api}) => {
+    const {data: {token}} = await api.post<User>(APIRoute.Login, AuthData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     saveToken(token);
     dispatch(requireAuth(AuthStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.MainPage));
   },
 );
 
@@ -59,5 +66,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireAuth(AuthStatus.NotAuth));
+    dispatch(redirectToRoute(AppRoute.MainPage))
   },
-); */
+);
