@@ -13,7 +13,8 @@
       "@pages/*": ["src/pages/*"],
       "@store/*": ["src/store/*"],
       "@appTypes/*": ["src/appTypes/*"],
-      "@const": ["src/constants"]
+      "@const": ["src/constants"],
+      "@services": ["src/services/*"],
     },
 
     /* Bundler mode */
