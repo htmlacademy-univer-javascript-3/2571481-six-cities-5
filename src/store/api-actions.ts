@@ -6,7 +6,7 @@ import { APIRoute, AppRoute, AuthStatus } from '@const';
 import { Offers } from '@appTypes/offer';
 import { redirectToRoute, requireAuth, setOffersDataLoadingStatus, setOffersList } from './action';
 import { AuthData, User } from '@appTypes/user';
-import { saveToken, dropToken } from '../services/token';
+import { saveToken, dropToken } from '@services/token';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
