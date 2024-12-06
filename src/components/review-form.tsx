@@ -45,6 +45,10 @@ export default function ReviewForm({ offerId } : ReviewFormProps): JSX.Element {
       rating: formData.rating,
       id: offerId,
     }));
+    setFormData({
+      review: '',
+      rating: 0,
+    });
     setIsPosting(false);
   };
 
