@@ -3,10 +3,11 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '@appTypes/state';
 import { APIRoute, AppRoute, AuthStatus } from '@const';
-import { Offers } from '@appTypes/offer';
-import { redirectToRoute, requireAuth, setOffersDataLoadingStatus, setOffersList } from './action';
+import { Offers, SingleOffer } from '@appTypes/offer';
+import { redirectToRoute, requireAuth, setOffersDataLoadingStatus, setOffersList, setReviews, setSingleOffer, setSingleOfferDataLoadingStatus } from './action';
 import { AuthData, User } from '@appTypes/user';
 import { saveToken, dropToken } from '@services/token';
+import { ReviewData, Reviews } from '@appTypes/review';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -20,6 +21,46 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     const {data} = await api.get<Offers>(APIRoute.Offers);
     dispatch(setOffersDataLoadingStatus(false));
     dispatch(setOffersList(data));
+  },
+);
+
+export const fetchSingleOfferAction = createAsyncThunk<void, { offerId: string }, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchSingleOffer',
+  async ({offerId}, {dispatch, extra: api}) => {
+    dispatch(setSingleOfferDataLoadingStatus(true));
+    const {data} = await api.get<SingleOffer>(APIRoute.Offers+'/'+offerId);
+    dispatch(fetchReviewsAction({offerId}));
+    dispatch(setSingleOfferDataLoadingStatus(false));
+    dispatch(setSingleOffer(data));
+  },
+);
+
+export const fetchReviewsAction = createAsyncThunk<void, { offerId: string }, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchReviews',
+  async ({offerId}, {dispatch, extra: api}) => {
+    dispatch(setSingleOfferDataLoadingStatus(true));
+    const {data} = await api.get<Reviews>(APIRoute.Comments+'/'+offerId);
+    dispatch(setSingleOfferDataLoadingStatus(false));
+    dispatch(setReviews(data));
+  },
+);
+
+export const postReviewAction = createAsyncThunk<void, ReviewData, {
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'review/postReview',
+  async ({comment, rating, id}, {extra: api}) => {
+    const numericRating = Number(rating);
+    await api.post(APIRoute.Comments+'/'+id, {comment, rating: numericRating});
   },
 );
 

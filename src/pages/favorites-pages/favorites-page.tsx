@@ -13,7 +13,7 @@ export function FavoritesPage(): JSX.Element{
       <Helmet>
         <title>Favorites</title>
       </Helmet>
-      <Header offers={offers}/>
+      <Header/>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
