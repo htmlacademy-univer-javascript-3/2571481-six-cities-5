@@ -1,4 +1,6 @@
-import React, { Fragment } from 'react';
+import { useAppDispatch } from '@hooks/index';
+import { postReviewAction } from '@store/api-actions';
+import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
 
 const titlesForRate = {
   1: 'terribly',
@@ -8,15 +10,46 @@ const titlesForRate = {
   5: 'perfect'
 } as const;
 
-export default function ReviewForm(): JSX.Element {
-  const [formData, setFormData] = React.useState({
+type ReviewFormProps = {
+  offerId: string;
+}
+
+export default function ReviewForm({ offerId } : ReviewFormProps): JSX.Element {
+  const [formData, setFormData] = useState({
     review: '',
     rating: 0
   });
+  const [isValid, setIsValid] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
+  const dispatch = useAppDispatch();
 
-  const handleFieldChange = (evt: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
+  const handleFieldChange = (evt: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
+  };
+
+  useEffect(() => {
+    if(formData.review.length > 50 && formData.review.length < 301 && formData.rating !== 0) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [formData]);
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    setIsPosting(true);
+    dispatch(postReviewAction({
+      comment: formData.review,
+      rating: formData.rating,
+      id: offerId,
+    }));
+    setFormData({
+      review: '',
+      rating: 0,
+    });
+    setIsPosting(false);
   };
 
   function starsRender(rating: 1|2|3|4|5) {
@@ -34,7 +67,7 @@ export default function ReviewForm(): JSX.Element {
   }
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" onSubmit={handleSubmit} aria-disabled={!isPosting}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {starsRender(5)}
@@ -48,7 +81,7 @@ export default function ReviewForm(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={!isValid}>Submit</button>
       </div>
     </form>
   );

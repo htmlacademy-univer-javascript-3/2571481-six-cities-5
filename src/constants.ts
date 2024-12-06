@@ -8,6 +8,7 @@ export enum AppRoute {
   Login = '/login',
   MainPage = '/',
   Favorites = '/favorites',
+  Offer = '/offer',
 }
 
 export const URL_MARKER_DEFAULT = '/img/pin.svg';

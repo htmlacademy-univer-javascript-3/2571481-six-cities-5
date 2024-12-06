@@ -12,9 +12,9 @@ import HistoryRouter from './history-route';
 import browserHistory from '../browser-history';
 
 export function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-  if (isOffersDataLoading) {
+  if (isDataLoading) {
     return (
       <LoadingScreen />
     );

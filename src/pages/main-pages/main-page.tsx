@@ -26,7 +26,7 @@ export function MainPage(): JSX.Element {
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <Header offers={offers}/>
+      <Header/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">

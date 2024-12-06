@@ -1,14 +1,10 @@
-import { Offers } from '@appTypes/offer';
 import { AppRoute, AuthStatus } from '@const';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { logoutAction } from '@store/api-actions';
 import { Link } from 'react-router-dom';
 
-type HeaderProps = {
-  offers: Offers;
-};
-
-export function Header({offers}: HeaderProps) : JSX.Element {
+export function Header() : JSX.Element {
+  const offers = useAppSelector((state) => state.offersList);
   const favoritesCount = offers.filter((offer) => offer.isFavorite).length;
   const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
   const dispatch = useAppDispatch();

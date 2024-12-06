@@ -6,6 +6,12 @@ export type User = {
     token: string;
 };
 
+export type SomePerson = {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+}
+
 export type AuthData = {
     email: string;
     password: string;
