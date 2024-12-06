@@ -21,7 +21,7 @@ export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: Ren
         <span>Premium</span>
       </div>}
       <div className={`${CardImageWrapper[cardType]} place-card__image-wrapper`}>
-        <Link to={AppRoute.Offer + '/' + offer.id}>
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.previewImage}
@@ -51,7 +51,7 @@ export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: Ren
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Offer + '/' + offer.id}>{offer.title}</Link>
+          <Link to={`${AppRoute.Offer}/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

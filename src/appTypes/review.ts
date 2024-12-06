@@ -6,7 +6,7 @@ export type ReviewData = {
     rating: number;
 }
 
-export type Review =  ReviewData & {
+export type Review = ReviewData & {
     date: string;
     user: SomePerson;
 };

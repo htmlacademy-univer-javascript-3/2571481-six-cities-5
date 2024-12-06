@@ -52,9 +52,10 @@ export function OfferPage(): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {curentOffer.isPremium && <div className="offer__mark">
-                <span>Premium</span>
-              </div>}
+              {curentOffer.isPremium &&
+                <div className="offer__mark">
+                  <span>Premium</span>
+                </div>}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{curentOffer.title}</h1>
                 <button className="offer__bookmark-button button" type="button">
@@ -89,10 +90,10 @@ export function OfferPage(): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  { curentOffer.goods.map((good, index) => (
-                      <li className="offer__inside-item" key={index}>
-                        {good}
-                      </li>))}
+                  { curentOffer.goods.map((good) => (
+                    <li className="offer__inside-item" key={`good-${good}`}>
+                      {good}
+                    </li>))}
                 </ul>
               </div>
               <div className="offer__host">
@@ -104,9 +105,7 @@ export function OfferPage(): JSX.Element {
                   <span className="offer__user-name">
                     {curentOffer.host.name}
                   </span>
-                  {curentOffer.host.isPro && <span className="offer__user-status">
-                    Pro
-                  </span>}
+                  {curentOffer.host.isPro && <span className="offer__user-status">Pro</span>}
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">

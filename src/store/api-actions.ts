@@ -24,21 +24,6 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const fetchSingleOfferAction = createAsyncThunk<void, { offerId: string }, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'data/fetchSingleOffer',
-  async ({offerId}, {dispatch, extra: api}) => {
-    dispatch(setSingleOfferDataLoadingStatus(true));
-    const {data} = await api.get<SingleOffer>(APIRoute.Offers+'/'+offerId);
-    dispatch(fetchReviewsAction({offerId}));
-    dispatch(setSingleOfferDataLoadingStatus(false));
-    dispatch(setSingleOffer(data));
-  },
-);
-
 export const fetchReviewsAction = createAsyncThunk<void, { offerId: string }, {
   dispatch: AppDispatch;
   state: State;
@@ -47,9 +32,24 @@ export const fetchReviewsAction = createAsyncThunk<void, { offerId: string }, {
   'data/fetchReviews',
   async ({offerId}, {dispatch, extra: api}) => {
     dispatch(setSingleOfferDataLoadingStatus(true));
-    const {data} = await api.get<Reviews>(APIRoute.Comments+'/'+offerId);
+    const {data} = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
     dispatch(setSingleOfferDataLoadingStatus(false));
     dispatch(setReviews(data));
+  },
+);
+
+export const fetchSingleOfferAction = createAsyncThunk<void, { offerId: string }, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchSingleOffer',
+  async ({offerId}, {dispatch, extra: api}) => {
+    dispatch(setSingleOfferDataLoadingStatus(true));
+    const {data} = await api.get<SingleOffer>(`${APIRoute.Offers}/${offerId}`);
+    dispatch(fetchReviewsAction({offerId}));
+    dispatch(setSingleOfferDataLoadingStatus(false));
+    dispatch(setSingleOffer(data));
   },
 );
 
@@ -60,7 +60,7 @@ export const postReviewAction = createAsyncThunk<void, ReviewData, {
   'review/postReview',
   async ({comment, rating, id}, {extra: api}) => {
     const numericRating = Number(rating);
-    await api.post(APIRoute.Comments+'/'+id, {comment, rating: numericRating});
+    await api.post(`${APIRoute.Comments}/${id}`, {comment, rating: numericRating});
   },
 );
 
