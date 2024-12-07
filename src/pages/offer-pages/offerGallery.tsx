@@ -9,7 +9,7 @@ export function OfferGallery(): JSX.Element {
         <div className="offer__image-wrapper" key={`image-${image}`}>
           <img className="offer__image" src={image} alt="Photo studio"/>
         </div>
-      ))}
+      )).slice(0,6)}
     </div>
   );
 }

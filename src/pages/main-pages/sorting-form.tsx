@@ -24,8 +24,8 @@ export function SortingForm({ onSortChange }: SortingFormProps): JSX.Element {
   return (
     <form className="places__sorting">
       <span className="places__sorting-caption">Sort by</span>
-      <span 
-        className="places__sorting-type" 
+      <span
+        className="places__sorting-type"
         tabIndex={0}
         onClick={() => setIsOpen(!isOpen)}
       >

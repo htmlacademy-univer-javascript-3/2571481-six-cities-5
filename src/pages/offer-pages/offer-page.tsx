@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import Map from '@components/map';
 import { OffersList } from '@components/offersList';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
-import { AuthStatus } from '@const';
+import { AuthStatus, PlaceTypes } from '@const';
 import { OfferForMap, SingleOffer } from '@appTypes/offer';
 import { OfferGallery } from './offerGallery';
 import { fetchSingleOfferAction } from '@store/api-actions';
@@ -74,13 +74,13 @@ export function OfferPage(): JSX.Element {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {curentOffer.type}
+                  {PlaceTypes[curentOffer.type]}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {curentOffer.bedrooms}
+                  {`${curentOffer.bedrooms} Bedroom${curentOffer.bedrooms > 1 ? 's' : ''}`}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  {curentOffer.maxAdults}
+                  {`Max ${curentOffer.maxAdults} Adult${curentOffer.maxAdults > 1 ? 's' : ''}`}
                 </li>
               </ul>
               <div className="offer__price">
