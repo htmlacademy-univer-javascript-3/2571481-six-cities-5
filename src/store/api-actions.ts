@@ -4,7 +4,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '@appTypes/state';
 import { APIRoute, AppRoute, AuthStatus } from '@const';
 import { Offers, SingleOffer } from '@appTypes/offer';
-import { redirectToRoute, requireAuth, setOffersDataLoadingStatus, setOffersList, setReviews, setSingleOffer, setSingleOfferDataLoadingStatus } from './action';
+import { redirectToRoute, requireAuth, setNearbyOffers, setOffersDataLoadingStatus, setOffersList, setReviews, setSingleOffer, setSingleOfferDataLoadingStatus } from './action';
 import { AuthData, User } from '@appTypes/user';
 import { saveToken, dropToken } from '@services/token';
 import { ReviewData, Reviews } from '@appTypes/review';
@@ -38,6 +38,20 @@ export const fetchReviewsAction = createAsyncThunk<void, { offerId: string }, {
   },
 );
 
+export const fetchNearbyOffersAction = createAsyncThunk<void, {offerId: string}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchNearbyOffers',
+  async ({offerId}, {dispatch, extra: api}) => {
+    dispatch(setSingleOfferDataLoadingStatus(true));
+    const {data} = await api.get<Offers>(`${APIRoute.Offers}/${offerId}/nearby`);
+    dispatch(setSingleOfferDataLoadingStatus(false));
+    dispatch(setNearbyOffers(data));
+  },
+);
+
 export const fetchSingleOfferAction = createAsyncThunk<void, { offerId: string }, {
   dispatch: AppDispatch;
   state: State;
@@ -48,6 +62,7 @@ export const fetchSingleOfferAction = createAsyncThunk<void, { offerId: string }
     dispatch(setSingleOfferDataLoadingStatus(true));
     const {data} = await api.get<SingleOffer>(`${APIRoute.Offers}/${offerId}`);
     dispatch(fetchReviewsAction({offerId}));
+    dispatch(fetchNearbyOffersAction({offerId}));
     dispatch(setSingleOfferDataLoadingStatus(false));
     dispatch(setSingleOffer(data));
   },

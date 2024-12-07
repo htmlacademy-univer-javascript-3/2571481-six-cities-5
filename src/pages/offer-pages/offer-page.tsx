@@ -24,9 +24,8 @@ export function OfferPage(): JSX.Element {
     }
   }, [offerId, dispatch]);
 
-  const offers = useAppSelector((state) => state.offersList);
   const reviews = useAppSelector((state) => state.reviews);
-  const cityName = useAppSelector((state) => state.city.name);
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers).slice(0, 3);
   const curentOffer = useAppSelector((state) => state.singleOffer) as SingleOffer;
   const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
 
@@ -34,10 +33,6 @@ export function OfferPage(): JSX.Element {
   if (!curentOffer || isDataLoading) {
     return <LoadingScreen/>;
   }
-
-  const nearbyOffers = offers.filter(
-    (offer) => offer.city.name === cityName && offer.id !== offerId
-  ).slice(0, 3);
 
   return (
     <div className="page">
@@ -120,7 +115,7 @@ export function OfferPage(): JSX.Element {
               </section>
             </div>
           </div>
-          <Map city={curentOffer.city} offers={offers} selectedOffer={curentOffer as OfferForMap} className={'offer__map'} />
+          <Map city={curentOffer.city} offers={[...nearbyOffers, curentOffer]} selectedOffer={curentOffer as OfferForMap} className={'offer__map'} />
         </section>
         <div className="container">
           <section className="near-places places">
