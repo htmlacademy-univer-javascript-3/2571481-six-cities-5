@@ -8,6 +8,7 @@ import { useAppSelector } from '@hooks/index';
 import { CitiesList } from '@components/citiesList';
 import { Offers } from '@appTypes/offer';
 import { SortingForm } from './sorting-form';
+import { MainEmptyPage } from './main-empty-page';
 
 export function MainPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offersList);
@@ -57,17 +58,18 @@ export function MainPage(): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{`${currentCityOffers.length} places to stay in ${city.name}`}</b>
-              <SortingForm onSortChange={handleSortChange}/>
-              <OffersList offers={currentCityOffers} onActiveOfferChange={setActiveOfferId} className='cities__places-list places__list tabs__content'/>
-            </section>
-            <div className="cities__right-section">
-              <Map city={city} offers={currentCityOffers} selectedOffer={activeOffer} className={'cities__map'}/>
-            </div>
-          </div>
+          {currentCityOffers.length > 0 ?
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{`${currentCityOffers.length} places to stay in ${city.name}`}</b>
+                <SortingForm onSortChange={handleSortChange}/>
+                <OffersList offers={currentCityOffers} onActiveOfferChange={setActiveOfferId} className='cities__places-list places__list tabs__content'/>
+              </section>
+              <div className="cities__right-section">
+                <Map city={city} offers={currentCityOffers} selectedOffer={activeOffer} className={'cities__map'}/>
+              </div>
+            </div> : <MainEmptyPage/>}
         </div>
       </main>
     </div>
