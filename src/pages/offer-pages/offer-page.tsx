@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import Map from '@components/map';
 import { OffersList } from '@components/offersList';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
-import { AuthStatus } from '@const';
+import { AuthStatus, PlaceTypes } from '@const';
 import { OfferForMap, SingleOffer } from '@appTypes/offer';
 import { OfferGallery } from './offerGallery';
 import { fetchSingleOfferAction } from '@store/api-actions';
@@ -24,9 +24,8 @@ export function OfferPage(): JSX.Element {
     }
   }, [offerId, dispatch]);
 
-  const offers = useAppSelector((state) => state.offersList);
   const reviews = useAppSelector((state) => state.reviews);
-  const cityName = useAppSelector((state) => state.city.name);
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers).slice(0, 3);
   const curentOffer = useAppSelector((state) => state.singleOffer) as SingleOffer;
   const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
 
@@ -34,10 +33,6 @@ export function OfferPage(): JSX.Element {
   if (!curentOffer || isDataLoading) {
     return <LoadingScreen/>;
   }
-
-  const nearbyOffers = offers.filter(
-    (offer) => offer.city.name === cityName && offer.id !== offerId
-  ).slice(0, 3);
 
   return (
     <div className="page">
@@ -67,20 +62,20 @@ export function OfferPage(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: `${curentOffer.rating * 100 / 5}%`}}></span>
+                  <span style={{width: `${Math.round(curentOffer.rating) * 20}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{curentOffer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {curentOffer.type}
+                  {PlaceTypes[curentOffer.type]}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {curentOffer.bedrooms}
+                  {`${curentOffer.bedrooms} Bedroom${curentOffer.bedrooms > 1 ? 's' : ''}`}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  {curentOffer.maxAdults}
+                  {`Max ${curentOffer.maxAdults} Adult${curentOffer.maxAdults > 1 ? 's' : ''}`}
                 </li>
               </ul>
               <div className="offer__price">
@@ -99,7 +94,7 @@ export function OfferPage(): JSX.Element {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={`offer__avatar-wrapper ${curentOffer.host.isPro ? 'offer__avatar-wrapper--pro' : 'user__avatar-wrapper'}`}>
                     <img className="offer__avatar user__avatar" src={curentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="offer__user-name">
@@ -120,7 +115,7 @@ export function OfferPage(): JSX.Element {
               </section>
             </div>
           </div>
-          <Map city={curentOffer.city} offers={offers} selectedOffer={curentOffer as OfferForMap} className={'offer__map'} />
+          <Map city={curentOffer.city} offers={[...nearbyOffers, curentOffer]} selectedOffer={curentOffer as OfferForMap} className={'offer__map'} />
         </section>
         <div className="container">
           <section className="near-places places">

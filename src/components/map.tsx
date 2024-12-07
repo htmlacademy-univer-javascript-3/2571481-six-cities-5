@@ -4,11 +4,11 @@ import useMap from '@hooks/use-map';
 import { City } from '@appTypes/city';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '@const';
 import 'leaflet/dist/leaflet.css';
-import { OfferForMap, Offers } from '@appTypes/offer';
+import { OfferForMap } from '@appTypes/offer';
 
 type MapProps = {
   city: City;
-  offers: Offers;
+  offers: OfferForMap[];
   selectedOffer: OfferForMap | undefined;
   className: string;
 };

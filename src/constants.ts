@@ -4,6 +4,13 @@ export enum AuthStatus {
   Unknown = 'UNKNOWN'
 }
 
+export const PlaceTypes: { [key: string]: string } = {
+  apartment: 'Apartment',
+  room: 'Room',
+  house: 'House',
+  hotel: 'Hotel',
+};
+
 export enum AppRoute {
   Login = '/login',
   MainPage = '/',
