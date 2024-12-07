@@ -1,10 +1,26 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { LogInForm } from './login-form';
-import { useAppSelector } from '@hooks/index';
+import { useAppDispatch, useAppSelector } from '@hooks/index';
+import { AppRoute, AuthStatus } from '@const';
+import { changeCity, redirectToRoute } from '@store/action';
+import { Cities } from '@appTypes/city';
 
 export function LoginPage(): JSX.Element{
-  const currentCityName = useAppSelector((state) => state.city.name);
+  const dispatch = useAppDispatch();
+  const randomCity = Cities[Math.floor(Math.random() * 6)];
+  const authStatus = useAppSelector((state) => state.authStatus);
+
+  if(authStatus === AuthStatus.Auth) {
+    dispatch(redirectToRoute(AppRoute.MainPage));
+  }
+
+  const handleClick = (evt: { preventDefault: () => void }) => {
+    evt.preventDefault();
+    dispatch(changeCity(randomCity));
+    dispatch(redirectToRoute(AppRoute.MainPage));
+  };
+
   return(
     <div className="page page--gray page--login">
       <Helmet>
@@ -30,8 +46,8 @@ export function LoginPage(): JSX.Element{
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to='/'>
-                <span>{currentCityName}</span>
+              <Link className="locations__item-link" onClick={handleClick} to='/'>
+                <span>{randomCity.name}</span>
               </Link>
             </div>
           </section>
