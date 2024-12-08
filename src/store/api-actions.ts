@@ -3,7 +3,7 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '@appTypes/state';
 import { APIRoute, AppRoute, AuthStatus } from '@const';
-import { Offers, SingleOffer } from '@appTypes/offer';
+import { Offer, Offers, SingleOffer } from '@appTypes/offer';
 import { redirectToRoute, requireAuth, setFavoriteOffers, setNearbyOffers, setOffersDataLoadingStatus, setOffersList, setReviews, setSingleOffer, setSingleOfferDataLoadingStatus, setUser } from './action';
 import { AuthData, User } from '@appTypes/user';
 import { saveToken, dropToken } from '@services/token';
@@ -93,16 +93,17 @@ export const postReviewAction = createAsyncThunk<void, ReviewData, {
   },
 );
 
-/* export const editFavoritesAction = createAsyncThunk<void, {offerId: string, isFavorite: boolean}, {
+export const editFavoritesAction = createAsyncThunk<void, {offerId: string, isFavorite: boolean}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/editFavorites',
   async ({offerId, isFavorite}, {dispatch, extra: api}) => {
-    const {data} = await api.post<FullDataOffer>(`${APIRoute.Favorites}/${offerId}/${isFavorite? 1 : 0}`);
+    await api.post<Offer>(`${APIRoute.Favorites}/${offerId}/${isFavorite? 0 : 1}`);
+    dispatch(fetchFavoriteOffersAction());
   },
-); */
+);
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

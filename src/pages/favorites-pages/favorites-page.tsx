@@ -35,26 +35,26 @@ export function FavoritesPage(): JSX.Element {
                   const cityFavorites = favorites.filter(
                     (favorite) => favorite.city.name === city.name);
                   return (
-                    <li key={city.name} className="favorites__locations-items">
-                      <div className="favorites__locations locations locations--current">
-                        <div className="locations__item">
-                          <Link
-                            className="locations__item-link"
-                            onClick={handleCityClick(city)}
-                            to={AppRoute.MainPage}
-                          >
-                            <span>{city.name}</span>
-                          </Link>
+                    cityFavorites.length > 0 && (
+                      <li key={city.name} className="favorites__locations-items">
+                        <div className="favorites__locations locations locations--current">
+                          <div className="locations__item">
+                            <Link
+                              className="locations__item-link"
+                              onClick={handleCityClick(city)}
+                              to={AppRoute.MainPage}
+                            >
+                              <span>{city.name}</span>
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                      {cityFavorites.length > 0 && (
                         <OffersList
                           offers={cityFavorites}
                           onActiveOfferChange={() => {}}
                           cardType={CardType.Favorites}
                           className="favorites__places"
-                        />)}
-                    </li>
+                        />
+                      </li>)
                   );
                 })}
               </ul>
