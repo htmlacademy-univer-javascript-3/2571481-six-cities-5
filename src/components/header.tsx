@@ -4,8 +4,7 @@ import { logoutAction } from '@store/api-actions';
 import { Link } from 'react-router-dom';
 
 export function Header() : JSX.Element {
-  const offers = useAppSelector((state) => state.offersList);
-  const favoritesCount = offers.filter((offer) => offer.isFavorite).length;
+  const favoritesCount = useAppSelector((state) => state.favoriteOffers).length;
   const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
   const dispatch = useAppDispatch();
 

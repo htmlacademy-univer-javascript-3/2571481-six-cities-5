@@ -4,7 +4,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '@appTypes/state';
 import { APIRoute, AppRoute, AuthStatus } from '@const';
 import { Offers, SingleOffer } from '@appTypes/offer';
-import { redirectToRoute, requireAuth, setNearbyOffers, setOffersDataLoadingStatus, setOffersList, setReviews, setSingleOffer, setSingleOfferDataLoadingStatus } from './action';
+import { redirectToRoute, requireAuth, setFavoriteOffers, setNearbyOffers, setOffersDataLoadingStatus, setOffersList, setReviews, setSingleOffer, setSingleOfferDataLoadingStatus } from './action';
 import { AuthData, User } from '@appTypes/user';
 import { saveToken, dropToken } from '@services/token';
 import { ReviewData, Reviews } from '@appTypes/review';
@@ -21,6 +21,20 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     const {data} = await api.get<Offers>(APIRoute.Offers);
     dispatch(setOffersDataLoadingStatus(false));
     dispatch(setOffersList(data));
+  },
+);
+
+export const fetchFavoriteOffersAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFavoriteOffers',
+  async (_arg, {dispatch, extra: api}) => {
+    dispatch(setOffersDataLoadingStatus(true));
+    const {data} = await api.get<Offers>(APIRoute.Favorites);
+    dispatch(setOffersDataLoadingStatus(false));
+    dispatch(setFavoriteOffers(data));
   },
 );
 
@@ -79,6 +93,17 @@ export const postReviewAction = createAsyncThunk<void, ReviewData, {
   },
 );
 
+/* export const editFavoritesAction = createAsyncThunk<void, {offerId: string, isFavorite: boolean}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/editFavorites',
+  async ({offerId, isFavorite}, {dispatch, extra: api}) => {
+    const {data} = await api.post<FullDataOffer>(`${APIRoute.Favorites}/${offerId}/${isFavorite? 1 : 0}`);
+  },
+); */
+
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
@@ -105,6 +130,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const {data: {token}} = await api.post<User>(APIRoute.Login, payload);
     saveToken(token);
     dispatch(requireAuth(AuthStatus.Auth));
+    dispatch(fetchFavoriteOffersAction());
     dispatch(redirectToRoute(AppRoute.MainPage));
   },
 );

@@ -9,6 +9,7 @@ import { CitiesList } from '@components/citiesList';
 import { Offers } from '@appTypes/offer';
 import { SortingForm } from './sorting-form';
 import { MainEmptyPage } from './main-empty-page';
+import { CardType } from '@const';
 
 export function MainPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offersList);
@@ -64,7 +65,7 @@ export function MainPage(): JSX.Element {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{`${currentCityOffers.length} places to stay in ${city.name}`}</b>
                 <SortingForm onSortChange={handleSortChange}/>
-                <OffersList offers={currentCityOffers} onActiveOfferChange={setActiveOfferId} className='cities__places-list places__list tabs__content'/>
+                <OffersList offers={currentCityOffers} onActiveOfferChange={setActiveOfferId} cardType={CardType.Cities} className='cities__places-list places__list tabs__content'/>
               </section>
               <div className="cities__right-section">
                 <Map city={city} offers={currentCityOffers} selectedOffer={activeOffer} className={'cities__map'}/>

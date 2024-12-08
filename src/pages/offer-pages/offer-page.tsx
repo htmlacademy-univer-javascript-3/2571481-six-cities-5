@@ -5,8 +5,8 @@ import { Helmet } from 'react-helmet-async';
 import Map from '@components/map';
 import { OffersList } from '@components/offersList';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
-import { AuthStatus, PlaceTypes } from '@const';
-import { OfferForMap, SingleOffer } from '@appTypes/offer';
+import { AuthStatus, CardType, PlaceTypes } from '@const';
+import { OfferForMap } from '@appTypes/offer';
 import { OfferGallery } from './offerGallery';
 import { fetchSingleOfferAction } from '@store/api-actions';
 import { useParams } from 'react-router-dom';
@@ -26,7 +26,7 @@ export function OfferPage(): JSX.Element {
 
   const reviews = useAppSelector((state) => state.reviews);
   const nearbyOffers = useAppSelector((state) => state.nearbyOffers).slice(0, 3);
-  const curentOffer = useAppSelector((state) => state.singleOffer) as SingleOffer;
+  const curentOffer = useAppSelector((state) => state.singleOffer);
   const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
 
   const isDataLoading = useAppSelector((state) => state.isSingleOfferDataLoading);
@@ -120,7 +120,7 @@ export function OfferPage(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersList offers={nearbyOffers} onActiveOfferChange={()=>{}} className='near-places__list places__list'/>
+            <OffersList offers={nearbyOffers} onActiveOfferChange={()=>{}} cardType={CardType.Nearby} className='near-places__list places__list'/>
           </section>
         </div>
       </main>

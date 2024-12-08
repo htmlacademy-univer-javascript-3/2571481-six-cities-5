@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setOffersList, changeCity, setReviews, setOffersDataLoadingStatus, requireAuth, setSingleOffer, setSingleOfferDataLoadingStatus, setNearbyOffers } from './action';
+import { setOffersList, changeCity, setReviews, setOffersDataLoadingStatus, requireAuth, setSingleOffer, setSingleOfferDataLoadingStatus, setNearbyOffers, setFavoriteOffers } from './action';
 import { Offers, SingleOffer } from '@appTypes/offer';
 import { Reviews } from '@appTypes/review';
 import { Cities, City } from '@appTypes/city';
@@ -10,6 +10,7 @@ type StateType = {
   offersList: Offers;
   reviews: Reviews;
   nearbyOffers: Offers;
+  favoriteOffers: Offers;
   isOffersDataLoading: boolean;
   isSingleOfferDataLoading: boolean;
   authStatus: AuthStatus;
@@ -21,6 +22,7 @@ const initialState: StateType = {
   offersList: [],
   reviews: [],
   nearbyOffers: [],
+  favoriteOffers: [],
   isOffersDataLoading: false,
   isSingleOfferDataLoading: false,
   authStatus: AuthStatus.Unknown,
@@ -34,6 +36,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersList, (state, { payload }) => {
       state.offersList = payload;
+    })
+    .addCase(setFavoriteOffers, (state, { payload }) => {
+      state.favoriteOffers = payload;
     })
     .addCase(setSingleOffer, (state, { payload }) => {
       state.singleOffer = payload;

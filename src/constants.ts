@@ -24,13 +24,13 @@ export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export enum CardType {
   Cities = 'cities__card',
-  Nearest = 'near-places__card',
+  Nearby = 'near-places__card',
   Favorites = 'favorites__card',
 }
 
 export const CardImageWrapper = {
   [CardType.Cities]: 'cities__image-wrapper',
-  [CardType.Nearest]: 'near-places__image-wrapper',
+  [CardType.Nearby]: 'near-places__image-wrapper',
   [CardType.Favorites]: 'favorites__image-wrapper',
 } as const;
 
