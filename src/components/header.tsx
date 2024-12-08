@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 export function Header() : JSX.Element {
   const favoritesCount = useAppSelector((state) => state.favoriteOffers).length;
+  const user = useAppSelector((state) => state.user);
   const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
   const dispatch = useAppDispatch();
 
@@ -23,8 +24,9 @@ export function Header() : JSX.Element {
                 <li className="header__nav-item user">
                   <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
+                      <img className="user__avatar" src={user?.avatarUrl} alt="user_avatar"/>
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{user?.email}</span>
                     <span className="header__favorite-count">{favoritesCount}</span>
                   </Link>
                 </li>}

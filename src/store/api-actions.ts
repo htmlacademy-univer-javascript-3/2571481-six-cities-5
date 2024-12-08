@@ -4,7 +4,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '@appTypes/state';
 import { APIRoute, AppRoute, AuthStatus } from '@const';
 import { Offers, SingleOffer } from '@appTypes/offer';
-import { redirectToRoute, requireAuth, setFavoriteOffers, setNearbyOffers, setOffersDataLoadingStatus, setOffersList, setReviews, setSingleOffer, setSingleOfferDataLoadingStatus } from './action';
+import { redirectToRoute, requireAuth, setFavoriteOffers, setNearbyOffers, setOffersDataLoadingStatus, setOffersList, setReviews, setSingleOffer, setSingleOfferDataLoadingStatus, setUser } from './action';
 import { AuthData, User } from '@appTypes/user';
 import { saveToken, dropToken } from '@services/token';
 import { ReviewData, Reviews } from '@appTypes/review';
@@ -112,7 +112,8 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     try {
-      await api.get(APIRoute.Login);
+      const {data} = await api.get<User>(APIRoute.Login);
+      dispatch(setUser(data));
       dispatch(requireAuth(AuthStatus.Auth));
     } catch {
       dispatch(requireAuth(AuthStatus.NotAuth));
@@ -127,9 +128,10 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async (payload, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<User>(APIRoute.Login, payload);
-    saveToken(token);
+    const {data} = await api.post<User>(APIRoute.Login, payload);
+    saveToken(data.token);
     dispatch(requireAuth(AuthStatus.Auth));
+    dispatch(setUser(data));
     dispatch(fetchFavoriteOffersAction());
     dispatch(redirectToRoute(AppRoute.MainPage));
   },

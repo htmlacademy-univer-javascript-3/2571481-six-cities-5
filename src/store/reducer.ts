@@ -1,9 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setOffersList, changeCity, setReviews, setOffersDataLoadingStatus, requireAuth, setSingleOffer, setSingleOfferDataLoadingStatus, setNearbyOffers, setFavoriteOffers } from './action';
+import { setOffersList, changeCity, setReviews, setOffersDataLoadingStatus, requireAuth, setSingleOffer, setSingleOfferDataLoadingStatus, setNearbyOffers, setFavoriteOffers, setUser } from './action';
 import { Offers, SingleOffer } from '@appTypes/offer';
 import { Reviews } from '@appTypes/review';
 import { Cities, City } from '@appTypes/city';
 import { AuthStatus } from '@const';
+import { User } from '@appTypes/user';
 
 type StateType = {
   city: City;
@@ -15,6 +16,7 @@ type StateType = {
   isSingleOfferDataLoading: boolean;
   authStatus: AuthStatus;
   singleOffer: SingleOffer | null;
+  user: User | null;
 };
 
 const initialState: StateType = {
@@ -27,6 +29,7 @@ const initialState: StateType = {
   isSingleOfferDataLoading: false,
   authStatus: AuthStatus.Unknown,
   singleOffer: null,
+  user: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -36,6 +39,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersList, (state, { payload }) => {
       state.offersList = payload;
+    })
+    .addCase(setUser, (state, { payload }) => {
+      state.user = payload;
     })
     .addCase(setFavoriteOffers, (state, { payload }) => {
       state.favoriteOffers = payload;
