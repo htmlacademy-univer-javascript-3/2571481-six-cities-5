@@ -15,6 +15,8 @@ export type EngineProcess = {
 export type UserProcess = {
     authStatus: AuthStatus;
     user: User | null;
+    favorites: Offers;
+    isUserDataLoding: boolean;
 };
 
 export type SingleOfferData = {

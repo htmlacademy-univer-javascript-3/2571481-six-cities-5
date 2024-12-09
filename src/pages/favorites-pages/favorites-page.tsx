@@ -7,12 +7,13 @@ import { Link } from 'react-router-dom';
 import { FavoritesEmpty } from './favorites-empty-page';
 import { Cities, City } from '@appTypes/city';
 import { redirectToRoute } from '@store/action';
-import { getOffers } from '@store/offers-data/offers-data.selectors';
 import { changeCity } from '@store/engine-process/engine-process';
+import { getFavorites } from '@store/user-process/user-process.selectors';
+import { LoadingScreen } from '@pages/loading-screen/loading-screen';
 
 export function FavoritesPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector(getOffers);
+  const favorites = useAppSelector(getFavorites);
   const cities = Cities;
 
   const handleCityClick = (city: City) => (event: React.MouseEvent) => {
@@ -20,6 +21,10 @@ export function FavoritesPage(): JSX.Element {
     dispatch(changeCity(city));
     dispatch(redirectToRoute(AppRoute.MainPage));
   };
+
+  if (!favorites) {
+    return <LoadingScreen/>;
+  }
 
   return (
     <div className="page">

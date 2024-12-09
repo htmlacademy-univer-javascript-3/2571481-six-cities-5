@@ -3,10 +3,15 @@ import { AuthStatus, NameSpace } from '@const';
 import { UserProcess } from '@appTypes/state';
 import { User } from '@appTypes/user';
 import { checkAuthAction, loginAction, logoutAction } from '@store/api-actions';
+import { Offer, Offers } from '@appTypes/offer';
+import { useAppDispatch } from '@hooks/index';
+import { setFavoritesCount } from '@store/offers-data/offers-data';
 
 const initialState: UserProcess = {
   authStatus: AuthStatus.NotAuth,
   user: null,
+  favorites: [],
+  isUserDataLoding: false,
 };
 
 export const userProcess = createSlice({
@@ -19,25 +24,55 @@ export const userProcess = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    setFavoriteOffers: (state, action: PayloadAction<Offers>) => {
+      state.favorites = action.payload;
+    },
+    updateFavorites: (state, action: PayloadAction<{ editedOffer: Offer }>) => {
+      const { editedOffer } = action.payload;
+      
+      const updateFavoriteStatus = (offers: Offers) => {
+        const offerIndex = offers.findIndex((offer) => offer.id === editedOffer.id);
+        if (offerIndex !== -1) {
+          delete offers[offerIndex];
+        } else {
+          offers.push(editedOffer);
+        }
+      };
+
+      updateFavoriteStatus(state.favorites);
+      const dispatch = useAppDispatch();
+      dispatch(setFavoritesCount(state.favorites.length));
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.fulfilled, (state) => {
         state.authStatus = AuthStatus.Auth;
+        state.isUserDataLoding = false;
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authStatus = AuthStatus.NotAuth;
+        state.isUserDataLoding = false;
       })
       .addCase(loginAction.fulfilled, (state) => {
         state.authStatus = AuthStatus.Auth;
+        state.isUserDataLoding = false;
       })
       .addCase(loginAction.rejected, (state) => {
         state.authStatus = AuthStatus.NotAuth;
+        state.isUserDataLoding = false;
+      })
+      .addCase(loginAction.pending, (state) => {
+        state.isUserDataLoding = true;
+      })
+      .addCase(checkAuthAction.pending, (state) => {
+        state.isUserDataLoding = true;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authStatus = AuthStatus.NotAuth;
+        state.isUserDataLoding = false;
       });
   }
 });
 
-export const { setAuthStatus, setUser } = userProcess.actions;
+export const { setAuthStatus, setUser, setFavoriteOffers, updateFavorites } = userProcess.actions;

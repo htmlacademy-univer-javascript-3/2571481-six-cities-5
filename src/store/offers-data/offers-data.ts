@@ -3,6 +3,8 @@ import { NameSpace } from '@const';
 import { OffersData } from '@appTypes/state';
 import { Offer, Offers } from '@appTypes/offer';
 import { fetchOffersAction } from '@store/api-actions';
+import { useAppDispatch } from '@hooks/index';
+import { updateFavorites } from '@store/user-process/user-process';
 
 const initialState: OffersData = {
   offersList: [],
@@ -20,6 +22,9 @@ export const offersData = createSlice({
     setOffersDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isOffersDataLoading = action.payload;
     },
+    setFavoritesCount: (state, action: PayloadAction<number>) => {
+      state.favoritesCount = action.payload;
+    },
     updateFavoritesCount: (state, action: PayloadAction<{ editedOffer: Offer }>) => {
       const { editedOffer } = action.payload;
       
@@ -31,8 +36,8 @@ export const offersData = createSlice({
       };
 
       updateFavoriteStatus(state.offersList);
-
-      state.favoritesCount = state.offersList.filter((offer) => offer.isFavorite).length;
+      const dispatch = useAppDispatch();
+      dispatch(updateFavorites({editedOffer}));
     },
   },
   extraReducers(builder) {
@@ -49,4 +54,4 @@ export const offersData = createSlice({
   }
 });
 
-export const { setOffersList, setOffersDataLoadingStatus, updateFavoritesCount } = offersData.actions;
+export const { setOffersList, setOffersDataLoadingStatus, updateFavoritesCount, setFavoritesCount } = offersData.actions;

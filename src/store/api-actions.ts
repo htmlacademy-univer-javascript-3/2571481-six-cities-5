@@ -3,14 +3,14 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '@appTypes/state';
 import { APIRoute, AppRoute } from '@const';
-import { Offer, Offers, SingleOffer } from '@appTypes/offer';
+import { FullDataOffer, Offers, SingleOffer } from '@appTypes/offer';
 import { redirectToRoute} from './action';
 import { AuthData, User } from '@appTypes/user';
 import { saveToken, dropToken } from '@services/token';
 import { ReviewData, Reviews } from '@appTypes/review';
-import { setOffersList, updateFavoritesCount } from './offers-data/offers-data';
+import { setFavoritesCount, setOffersList, updateFavoritesCount } from './offers-data/offers-data';
 import { setNearbyOffers, setReviews, setSingleOffer } from './single-offer-data/single-offer-data';
-import { setUser } from './user-process/user-process';
+import { setFavoriteOffers, setUser } from './user-process/user-process';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -81,7 +81,7 @@ export const editFavoritesAction = createAsyncThunk<void, {offerId: string, isFa
 }>(
   'user/editFavorites',
   async ({offerId, isFavorite}, {dispatch, extra: api}) => {
-    const {data} = await api.post<Offer>(`${APIRoute.Favorites}/${offerId}/${isFavorite? 1 : 0}`);
+    const {data} = await api.post<FullDataOffer>(`${APIRoute.Favorites}/${offerId}/${isFavorite? 1 : 0}`);
     dispatch(updateFavoritesCount({ editedOffer: data }));
   },
 );
@@ -94,7 +94,21 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<User>(APIRoute.Login);
+    dispatch(fetchFavoriteOffersAction());
     dispatch(setUser(data));
+  },
+);
+
+export const fetchFavoriteOffersAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFavoriteOffers',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<Offers>(APIRoute.Favorites);
+    dispatch(setFavoriteOffers(data));
+    dispatch(setFavoritesCount(data.length));
   },
 );
 
