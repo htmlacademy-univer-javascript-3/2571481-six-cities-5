@@ -4,6 +4,13 @@ export enum AuthStatus {
   Unknown = 'UNKNOWN'
 }
 
+export enum NameSpace {
+  Engine = 'ENGINE',
+  Offers = 'OFFERS',
+  SingleOffer = 'SINGLEOFFER',
+  User = 'USER',
+}
+
 export const PlaceTypes: { [key: string]: string } = {
   apartment: 'Apartment',
   room: 'Room',

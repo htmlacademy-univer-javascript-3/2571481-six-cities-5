@@ -14,13 +14,13 @@ type RentOfferCardProps = {
 
 export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: RentOfferCardProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
+  const isAuth = useAppSelector((state) => state.USER.authStatus) === AuthStatus.Auth;
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
     if (isAuth) {
       dispatch(editFavoritesAction({
         offerId: offer.id,
-        isFavorite: offer.isFavorite
+        isFavorite: !offer.isFavorite
       }));
       offer.isFavorite = !offer.isFavorite;
     } else {
