@@ -93,14 +93,14 @@ export const postReviewAction = createAsyncThunk<void, ReviewData, {
   },
 );
 
-export const editFavoritesAction = createAsyncThunk<void, {offerId: string, isFavorite: boolean}, {
+export const editFavoritesAction = createAsyncThunk<void, {offerId: string; isFavorite: boolean}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/editFavorites',
   async ({offerId, isFavorite}, {dispatch, extra: api}) => {
-    await api.post<Offer>(`${APIRoute.Favorites}/${offerId}/${isFavorite? 0 : 1}`);
+    await api.post<Offer>(`${APIRoute.Favorites}/${offerId}/${isFavorite ? 0 : 1}`);
     dispatch(fetchFavoriteOffersAction());
   },
 );

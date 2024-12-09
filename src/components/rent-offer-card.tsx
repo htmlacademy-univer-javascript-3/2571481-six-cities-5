@@ -1,4 +1,4 @@
-import { AppRoute, CardImageWrapper, CardType } from '@const';
+import { AppRoute, AuthStatus, CardImageWrapper, CardType } from '@const';
 import { Offer } from '@appTypes/offer';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
@@ -14,7 +14,7 @@ type RentOfferCardProps = {
 
 export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: RentOfferCardProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector((state) => state.authStatus);
+  const isAuth = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
     if (isAuth) {
