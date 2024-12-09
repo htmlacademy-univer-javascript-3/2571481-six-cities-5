@@ -59,7 +59,9 @@ export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: Ren
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">In bookmarks</span>
+            {offer.isFavorite ?
+              <span className="visually-hidden">In bookmarks</span> :
+              <span className="visually-hidden">To bookmarks</span>}
           </button>
         </div>
         <div className="place-card__rating rating">

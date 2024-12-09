@@ -5,27 +5,30 @@ import { Helmet } from 'react-helmet-async';
 import Map from '@components/map';
 import { OffersList } from '@components/offersList';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
-import { AuthStatus, CardType, PlaceTypes } from '@const';
+import { AppRoute, AuthStatus, CardType, PlaceTypes } from '@const';
 import { OfferForMap } from '@appTypes/offer';
 import { OfferGallery } from './offerGallery';
-import { fetchSingleOfferAction } from '@store/api-actions';
+import { editFavoritesAction, fetchSingleOfferAction } from '@store/api-actions';
 import { useParams } from 'react-router-dom';
 import { LoadingScreen } from '@pages/loading-screen/loading-screen';
 import { useEffect } from 'react';
 import { getNearbyOffers, getReviews, getSingleOffer, getSingleOfferDataLoadingStatus } from '@store/single-offer-data/single-offer-data.selectors';
 import { getAuthStatus } from '@store/user-process/user-process.selectors';
+import { redirectToRoute } from '@store/action';
 
 
 export function OfferPage(): JSX.Element {
 
   const offerId = useParams<{ id: string }>().id as string;
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (offerId) {
       dispatch(fetchSingleOfferAction({ offerId }));
     }
   }, [offerId, dispatch]);
 
+  const isAuth = useAppSelector(getAuthStatus) === AuthStatus.Auth;
   const reviews = useAppSelector(getReviews);
   const nearbyOffers = useAppSelector(getNearbyOffers).slice(0, 3);
   const curentOffer = useAppSelector(getSingleOffer);
@@ -35,6 +38,18 @@ export function OfferPage(): JSX.Element {
   if (!curentOffer || isDataLoading) {
     return <LoadingScreen/>;
   }
+
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    if (isAuth) {
+      dispatch(editFavoritesAction({
+        offerId: curentOffer.id,
+        isFavorite: !curentOffer.isFavorite
+      }));
+    } else {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
+  };
 
   return (
     <div className="page">
@@ -55,11 +70,13 @@ export function OfferPage(): JSX.Element {
                 </div>}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{curentOffer.title}</h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button className={`offer__bookmark-button${curentOffer.isFavorite ? '--active' : ''} button`} type="button" onClick={handleClick}>
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
+                  {curentOffer.isFavorite ?
+                    <span className="visually-hidden">In bookmarks</span> :
+                    <span className="visually-hidden">To bookmarks</span>}
                 </button>
               </div>
               <div className="offer__rating rating">

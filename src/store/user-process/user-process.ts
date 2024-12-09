@@ -31,7 +31,7 @@ export const userProcess = createSlice({
       const updateFavoriteStatus = (offers: Offers) => {
         const offerIndex = offers.findIndex((offer) => offer.id === editedOffer.id);
         if (offerIndex !== -1) {
-          delete offers[offerIndex];
+          offers.splice(offerIndex, 1);
         } else {
           offers.push(editedOffer);
         }
