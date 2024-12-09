@@ -1,13 +1,15 @@
 import { AppRoute, AuthStatus } from '@const';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { logoutAction } from '@store/api-actions';
+import { getFavoritesCount } from '@store/offers-data/offers-data.selectors';
+import { getAuthStatus, getUser } from '@store/user-process/user-process.selectors';
 import { Link } from 'react-router-dom';
 
 export function Header() : JSX.Element {
-  const offers = useAppSelector((state) => state.offersList);
-  const favoritesCount = offers.filter((offer) => offer.isFavorite).length;
-  const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
   const dispatch = useAppDispatch();
+  const favoritesCount = useAppSelector(getFavoritesCount);
+  const user = useAppSelector(getUser);
+  const isAuthorised = useAppSelector(getAuthStatus) === AuthStatus.Auth;
 
   return (
     <header className="header">
@@ -24,8 +26,9 @@ export function Header() : JSX.Element {
                 <li className="header__nav-item user">
                   <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
+                      <img className="user__avatar" src={user?.avatarUrl} alt="user_avatar"/>
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{user?.email}</span>
                     <span className="header__favorite-count">{favoritesCount}</span>
                   </Link>
                 </li>}

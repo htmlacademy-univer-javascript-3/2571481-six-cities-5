@@ -12,7 +12,10 @@ type DetailMessageType = {
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
+  [StatusCodes.NOT_FOUND]: true,
+  [StatusCodes.BAD_GATEWAY]: true,
+  [StatusCodes.GATEWAY_TIMEOUT]: true,
+  [StatusCodes.CONFLICT]: true
 };
 
 const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';

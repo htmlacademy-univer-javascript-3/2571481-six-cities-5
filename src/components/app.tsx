@@ -10,11 +10,14 @@ import { useAppSelector } from '@hooks/index';
 import { LoadingScreen } from '@pages/loading-screen/loading-screen';
 import HistoryRouter from './history-route';
 import browserHistory from '../browser-history';
+import { getOffersDataLoadingStatus } from '@store/offers-data/offers-data.selectors';
+import { getUserDataLoadingStatus } from '@store/user-process/user-process.selectors';
 
 export function App(): JSX.Element {
-  const isDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
+  const isUserDataLoading = useAppSelector(getUserDataLoadingStatus);
 
-  if (isDataLoading) {
+  if (isOffersDataLoading || isUserDataLoading) {
     return (
       <LoadingScreen />
     );

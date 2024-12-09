@@ -27,4 +27,6 @@ export type SingleOffer = Omit<Offer, 'previewImage'> & {
     maxAdults: number;
 };
 
+export type FullDataOffer = Offer & SingleOffer;
+
 export type Offers = Offer[];
