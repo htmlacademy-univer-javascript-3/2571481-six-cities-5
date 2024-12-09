@@ -60,7 +60,7 @@ export const singleOfferData = createSlice({
       })
       .addCase(fetchSingleOfferAction.pending, (state) => {
         state.isSingleOfferDataLoading = true;
-      })
+      });
   }
 });
 

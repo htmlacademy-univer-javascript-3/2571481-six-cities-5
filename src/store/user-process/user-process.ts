@@ -4,8 +4,6 @@ import { UserProcess } from '@appTypes/state';
 import { User } from '@appTypes/user';
 import { checkAuthAction, loginAction, logoutAction } from '@store/api-actions';
 import { Offer, Offers } from '@appTypes/offer';
-import { useAppDispatch } from '@hooks/index';
-import { setFavoritesCount } from '@store/offers-data/offers-data';
 
 const initialState: UserProcess = {
   authStatus: AuthStatus.NotAuth,
@@ -27,9 +25,9 @@ export const userProcess = createSlice({
     setFavoriteOffers: (state, action: PayloadAction<Offers>) => {
       state.favorites = action.payload;
     },
-    updateFavorites: (state, action: PayloadAction<{ editedOffer: Offer }>) => {
+    updateUserFavorites: (state, action: PayloadAction<{ editedOffer: Offer }>) => {
       const { editedOffer } = action.payload;
-      
+
       const updateFavoriteStatus = (offers: Offers) => {
         const offerIndex = offers.findIndex((offer) => offer.id === editedOffer.id);
         if (offerIndex !== -1) {
@@ -40,8 +38,6 @@ export const userProcess = createSlice({
       };
 
       updateFavoriteStatus(state.favorites);
-      const dispatch = useAppDispatch();
-      dispatch(setFavoritesCount(state.favorites.length));
     },
   },
   extraReducers(builder) {
@@ -75,4 +71,4 @@ export const userProcess = createSlice({
   }
 });
 
-export const { setAuthStatus, setUser, setFavoriteOffers, updateFavorites } = userProcess.actions;
+export const { setAuthStatus, setUser, setFavoriteOffers, updateUserFavorites } = userProcess.actions;

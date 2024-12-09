@@ -3,8 +3,6 @@ import { NameSpace } from '@const';
 import { OffersData } from '@appTypes/state';
 import { Offer, Offers } from '@appTypes/offer';
 import { fetchOffersAction } from '@store/api-actions';
-import { useAppDispatch } from '@hooks/index';
-import { updateFavorites } from '@store/user-process/user-process';
 
 const initialState: OffersData = {
   offersList: [],
@@ -25,9 +23,9 @@ export const offersData = createSlice({
     setFavoritesCount: (state, action: PayloadAction<number>) => {
       state.favoritesCount = action.payload;
     },
-    updateFavoritesCount: (state, action: PayloadAction<{ editedOffer: Offer }>) => {
+    updateFavoritesInOffers: (state, action: PayloadAction<{ editedOffer: Offer }>) => {
       const { editedOffer } = action.payload;
-      
+
       const updateFavoriteStatus = (offers: Offers) => {
         const offerIndex = offers.findIndex((offer) => offer.id === editedOffer.id);
         if (offerIndex !== -1) {
@@ -36,8 +34,7 @@ export const offersData = createSlice({
       };
 
       updateFavoriteStatus(state.offersList);
-      const dispatch = useAppDispatch();
-      dispatch(updateFavorites({editedOffer}));
+      state.favoritesCount = state.offersList.filter((offer) => offer.isFavorite).length;
     },
   },
   extraReducers(builder) {
@@ -50,8 +47,8 @@ export const offersData = createSlice({
       })
       .addCase(fetchOffersAction.pending, (state) => {
         state.isOffersDataLoading = true;
-      })
+      });
   }
 });
 
-export const { setOffersList, setOffersDataLoadingStatus, updateFavoritesCount, setFavoritesCount } = offersData.actions;
+export const { setOffersList, setOffersDataLoadingStatus, updateFavoritesInOffers, setFavoritesCount } = offersData.actions;

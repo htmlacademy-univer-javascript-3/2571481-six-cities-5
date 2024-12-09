@@ -1,7 +1,7 @@
-import { Offers, SingleOffer } from "@appTypes/offer";
-import { Reviews } from "@appTypes/review";
-import { State } from "@appTypes/state";
-import { NameSpace } from "@const";
+import { Offers, SingleOffer } from '@appTypes/offer';
+import { Reviews } from '@appTypes/review';
+import { State } from '@appTypes/state';
+import { NameSpace } from '@const';
 
 export const getSingleOffer = (state: State): SingleOffer | null => state[NameSpace.SingleOffer].singleOffer;
 export const getNearbyOffers = (state: State): Offers => state[NameSpace.SingleOffer].nearbyOffers;
