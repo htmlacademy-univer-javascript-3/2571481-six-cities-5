@@ -90,7 +90,7 @@ export const editFavoritesAction = createAsyncThunk<void, {offerId: string, isFa
   'user/editFavorites',
   async ({offerId, isFavorite}, {dispatch, extra: api}) => {
     const {data} = await api.post<Offer>(`${APIRoute.Favorites}/${offerId}/${isFavorite? 1 : 0}`);
-    dispatch(updateFavoritesCount({ offerId: data.id, isFavorite: data.isFavorite }));
+    dispatch(updateFavoritesCount({ editedOffer: data }));
   },
 );
 

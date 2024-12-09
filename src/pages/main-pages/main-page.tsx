@@ -10,10 +10,12 @@ import { Offers } from '@appTypes/offer';
 import { SortingForm } from './sorting-form';
 import { MainEmptyPage } from './main-empty-page';
 import { CardType } from '@const';
+import { getOffers } from '@store/offers-data/offers-data.selectors';
+import { getCity } from '@store/engine-process/engine-process.selectors';
 
 export function MainPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offersList);
-  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector(getOffers);
+  const city = useAppSelector(getCity);
 
   const [currentCityOffers, setCurrentCityOffers] = useState<Offers>([]);
   const [filteredCityOffers, setFilteredCityOffers] = useState<Offers>([]);

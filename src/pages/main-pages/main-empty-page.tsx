@@ -1,7 +1,8 @@
 import { useAppSelector } from '@hooks/index';
+import { getCity } from '@store/engine-process/engine-process.selectors';
 
 export function MainEmptyPage(): JSX.Element{
-  const cityName = useAppSelector((state) => state.city.name);
+  const cityName = useAppSelector(getCity).name;
   return(
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">

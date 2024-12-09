@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '@const';
 import { OffersData } from '@appTypes/state';
-import { Offers } from '@appTypes/offer';
+import { Offer, Offers } from '@appTypes/offer';
 
 const initialState: OffersData = {
   offersList: [],
@@ -19,22 +19,19 @@ export const offersData = createSlice({
     setOffersDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isOffersDataLoading = action.payload;
     },
-    updateFavoritesCount: (state, action: PayloadAction<{ offerId: string; isFavorite: boolean }>) => {
-      const { offerId, isFavorite } = action.payload;
+    updateFavoritesCount: (state, action: PayloadAction<{ editedOffer: Offer }>) => {
+      const { editedOffer } = action.payload;
       
       const updateFavoriteStatus = (offers: Offers) => {
-        const offerIndex = offers.findIndex((offer) => offer.id === offerId);
+        const offerIndex = offers.findIndex((offer) => offer.id === editedOffer.id);
         if (offerIndex !== -1) {
-          offers[offerIndex].isFavorite = isFavorite;
-          if(isFavorite) {
-            state.favoritesCount += 1;
-          } else {
-            state.favoritesCount -= 1;
-          }
+          offers[offerIndex] = editedOffer;
         }
       };
 
       updateFavoriteStatus(state.offersList);
+
+      state.favoritesCount = state.offersList.filter((offer) => offer.isFavorite).length;
     },
   },
 });

@@ -1,7 +1,8 @@
 import { useAppSelector } from '@hooks/index';
+import { getSingleOffer } from '@store/single-offer-data/single-offer-data.selectors';
 
 export function OfferGallery(): JSX.Element {
-  const images = useAppSelector((state) => state.singleOffer?.images) as string[];
+  const images = useAppSelector(getSingleOffer)?.images as string[];
 
   return (
     <div className="offer__gallery">

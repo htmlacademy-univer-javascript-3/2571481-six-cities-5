@@ -1,13 +1,15 @@
 import { AppRoute, AuthStatus } from '@const';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { logoutAction } from '@store/api-actions';
+import { getFavoritesCount } from '@store/offers-data/offers-data.selectors';
+import { getAuthStatus, getUser } from '@store/user-process/user-process.selectors';
 import { Link } from 'react-router-dom';
 
 export function Header() : JSX.Element {
-  const favoritesCount = useAppSelector((state) => state.favoriteOffers).length;
-  const user = useAppSelector((state) => state.user);
-  const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
   const dispatch = useAppDispatch();
+  const favoritesCount = useAppSelector(getFavoritesCount);
+  const user = useAppSelector(getUser);
+  const isAuthorised = useAppSelector(getAuthStatus) === AuthStatus.Auth;
 
   return (
     <header className="header">

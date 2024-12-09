@@ -12,6 +12,8 @@ import { fetchSingleOfferAction } from '@store/api-actions';
 import { useParams } from 'react-router-dom';
 import { LoadingScreen } from '@pages/loading-screen/loading-screen';
 import { useEffect } from 'react';
+import { getNearbyOffers, getReviews, getSingleOffer, getSingleOfferDataLoadingStatus } from '@store/single-offer-data/single-offer-data.selectors';
+import { getAuthStatus } from '@store/user-process/user-process.selectors';
 
 
 export function OfferPage(): JSX.Element {
@@ -24,12 +26,12 @@ export function OfferPage(): JSX.Element {
     }
   }, [offerId, dispatch]);
 
-  const reviews = useAppSelector((state) => state.reviews);
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers).slice(0, 3);
-  const curentOffer = useAppSelector((state) => state.singleOffer);
-  const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
+  const reviews = useAppSelector(getReviews);
+  const nearbyOffers = useAppSelector(getNearbyOffers).slice(0, 3);
+  const curentOffer = useAppSelector(getSingleOffer);
+  const isAuthorised = useAppSelector(getAuthStatus) === AuthStatus.Auth;
 
-  const isDataLoading = useAppSelector((state) => state.isSingleOfferDataLoading);
+  const isDataLoading = useAppSelector(getSingleOfferDataLoadingStatus);
   if (!curentOffer || isDataLoading) {
     return <LoadingScreen/>;
   }

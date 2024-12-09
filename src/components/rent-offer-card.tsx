@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { editFavoritesAction } from '@store/api-actions';
 import { redirectToRoute } from '@store/action';
+import { getAuthStatus } from '@store/user-process/user-process.selectors';
 
 type RentOfferCardProps = {
   offer: Offer;
@@ -14,7 +15,7 @@ type RentOfferCardProps = {
 
 export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: RentOfferCardProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector((state) => state.USER.authStatus) === AuthStatus.Auth;
+  const isAuth = useAppSelector(getAuthStatus) === AuthStatus.Auth;
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
     if (isAuth) {
@@ -22,7 +23,6 @@ export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: Ren
         offerId: offer.id,
         isFavorite: !offer.isFavorite
       }));
-      offer.isFavorite = !offer.isFavorite;
     } else {
       dispatch(redirectToRoute(AppRoute.Login));
     }

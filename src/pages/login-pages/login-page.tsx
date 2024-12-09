@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { LogInForm } from './login-form';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { AppRoute, AuthStatus } from '@const';
-import { changeCity, redirectToRoute } from '@store/action';
+import { redirectToRoute } from '@store/action';
 import { Cities } from '@appTypes/city';
+import { getAuthStatus } from '@store/user-process/user-process.selectors';
+import { changeCity } from '@store/engine-process/engine-process';
 
 export function LoginPage(): JSX.Element{
   const dispatch = useAppDispatch();
   const randomCity = Cities[Math.floor(Math.random() * 6)];
-  const authStatus = useAppSelector((state) => state.authStatus);
+  const authStatus = useAppSelector(getAuthStatus);
 
   if(authStatus === AuthStatus.Auth) {
     dispatch(redirectToRoute(AppRoute.MainPage));

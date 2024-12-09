@@ -6,11 +6,13 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { FavoritesEmpty } from './favorites-empty-page';
 import { Cities, City } from '@appTypes/city';
-import { changeCity, redirectToRoute } from '@store/action';
+import { redirectToRoute } from '@store/action';
+import { getOffers } from '@store/offers-data/offers-data.selectors';
+import { changeCity } from '@store/engine-process/engine-process';
 
 export function FavoritesPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector((state) => state.favoriteOffers);
+  const favorites = useAppSelector(getOffers);
   const cities = Cities;
 
   const handleCityClick = (city: City) => (event: React.MouseEvent) => {

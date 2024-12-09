@@ -1,6 +1,6 @@
 import { City } from '@appTypes/city';
 import { useAppDispatch } from '@hooks/index';
-import { changeCity } from '@store/action';
+import { changeCity } from '@store/engine-process/engine-process';
 
 type CitiesListProps = {
   cities: City[];
