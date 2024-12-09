@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '@const';
 import { OffersData } from '@appTypes/state';
 import { Offer, Offers } from '@appTypes/offer';
+import { fetchOffersAction } from '@store/api-actions';
 
 const initialState: OffersData = {
   offersList: [],
@@ -34,6 +35,18 @@ export const offersData = createSlice({
       state.favoritesCount = state.offersList.filter((offer) => offer.isFavorite).length;
     },
   },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchOffersAction.fulfilled, (state) => {
+        state.isOffersDataLoading = false;
+      })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.isOffersDataLoading = false;
+      })
+      .addCase(fetchOffersAction.pending, (state) => {
+        state.isOffersDataLoading = true;
+      })
+  }
 });
 
 export const { setOffersList, setOffersDataLoadingStatus, updateFavoritesCount } = offersData.actions;

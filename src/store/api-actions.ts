@@ -8,8 +8,8 @@ import { redirectToRoute} from './action';
 import { AuthData, User } from '@appTypes/user';
 import { saveToken, dropToken } from '@services/token';
 import { ReviewData, Reviews } from '@appTypes/review';
-import { setOffersDataLoadingStatus, setOffersList, updateFavoritesCount } from './offers-data/offers-data';
-import { setNearbyOffers, setReviews, setSingleOffer, setSingleOfferDataLoadingStatus } from './single-offer-data/single-offer-data';
+import { setOffersList, updateFavoritesCount } from './offers-data/offers-data';
+import { setNearbyOffers, setReviews, setSingleOffer } from './single-offer-data/single-offer-data';
 import { setUser } from './user-process/user-process';
 
 
@@ -20,9 +20,7 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setOffersDataLoadingStatus(true));
     const {data} = await api.get<Offers>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
     dispatch(setOffersList(data));
   },
 );
@@ -34,9 +32,7 @@ export const fetchReviewsAction = createAsyncThunk<void, { offerId: string }, {
 }>(
   'data/fetchReviews',
   async ({offerId}, {dispatch, extra: api}) => {
-    dispatch(setSingleOfferDataLoadingStatus(true));
     const {data} = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
-    dispatch(setSingleOfferDataLoadingStatus(false));
     dispatch(setReviews({reviews: data}));
   },
 );
@@ -48,9 +44,7 @@ export const fetchNearbyOffersAction = createAsyncThunk<void, {offerId: string},
 }>(
   'data/fetchNearbyOffers',
   async ({offerId}, {dispatch, extra: api}) => {
-    dispatch(setSingleOfferDataLoadingStatus(true));
     const {data} = await api.get<Offers>(`${APIRoute.Offers}/${offerId}/nearby`);
-    dispatch(setSingleOfferDataLoadingStatus(false));
     dispatch(setNearbyOffers({nearbyOffers: data}));
   },
 );
@@ -62,11 +56,9 @@ export const fetchSingleOfferAction = createAsyncThunk<void, { offerId: string }
 }>(
   'data/fetchSingleOffer',
   async ({offerId}, {dispatch, extra: api}) => {
-    dispatch(setSingleOfferDataLoadingStatus(true));
     const {data} = await api.get<SingleOffer>(`${APIRoute.Offers}/${offerId}`);
     dispatch(fetchReviewsAction({offerId}));
     dispatch(fetchNearbyOffersAction({offerId}));
-    dispatch(setSingleOfferDataLoadingStatus(false));
     dispatch(setSingleOffer({offer: data}));
   },
 );
