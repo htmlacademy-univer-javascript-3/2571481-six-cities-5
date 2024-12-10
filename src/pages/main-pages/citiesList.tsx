@@ -14,7 +14,7 @@ function CitiesList(): JSX.Element {
 
   const handleCityChange = useCallback((city: City) => {
     dispatch(changeCity(city));
-  }, []);
+  }, [dispatch]);
 
   return (
     <ul className="locations__list tabs__list">
