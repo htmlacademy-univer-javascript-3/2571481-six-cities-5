@@ -28,7 +28,7 @@ export function MainPage(): JSX.Element {
   }, [city, offers]);
 
   const sortedOffers = useMemo(() => {
-    let sorted = [...currentCityOffers];
+    const sorted = [...currentCityOffers];
     switch (selectedSort) {
       case 'Price: low to high':
         sorted.sort((a, b) => a.price - b.price);
@@ -45,8 +45,8 @@ export function MainPage(): JSX.Element {
     return sorted;
   }, [currentCityOffers, selectedSort]);
 
-  const handleSortChange = (selectedSort: string) => {
-    setSelectedSort(selectedSort);
+  const handleSortChange = (sort: string) => {
+    setSelectedSort(sort);
   };
 
   return (

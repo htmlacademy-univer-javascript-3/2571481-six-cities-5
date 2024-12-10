@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { AppRoute, AuthStatus } from '@const';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { logoutAction } from '@store/api-actions';
@@ -6,7 +6,7 @@ import { getFavoritesCount } from '@store/offers-data/offers-data.selectors';
 import { getAuthStatus, getUser } from '@store/user-process/user-process.selectors';
 import { Link } from 'react-router-dom';
 
-const Header = (): JSX.Element => {
+function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const favoritesCount = useAppSelector(getFavoritesCount);
   const user = useAppSelector(getUser);
@@ -58,6 +58,7 @@ const Header = (): JSX.Element => {
       </div>
     </header>
   );
-};
+}
 
-export default React.memo(Header);
+const MemoizedHeader = memo(Header);
+export default MemoizedHeader;

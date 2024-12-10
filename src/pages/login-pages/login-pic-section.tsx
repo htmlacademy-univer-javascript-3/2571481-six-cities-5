@@ -3,10 +3,10 @@ import { AppRoute } from '@const';
 import { useAppDispatch } from '@hooks/index';
 import { redirectToRoute } from '@store/action';
 import { changeCity } from '@store/engine-process/engine-process';
-import React from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-const LoginPicSection = (): JSX.Element => {
+function LoginPicSection(): JSX.Element {
   const dispatch = useAppDispatch();
   const randomCity = Cities[Math.floor(Math.random() * 6)];
   const handleClick = (evt: { preventDefault: () => void }) => {
@@ -24,6 +24,7 @@ const LoginPicSection = (): JSX.Element => {
       </div>
     </section>
   );
-};
+}
 
-export default React.memo(LoginPicSection, () => true);
+const MemoizedLoginPicSection = memo(LoginPicSection);
+export default MemoizedLoginPicSection;

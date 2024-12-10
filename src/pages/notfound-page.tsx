@@ -3,6 +3,16 @@ import Header from '@components/header';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
+const styles: { container: React.CSSProperties } = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    fontSize: '45px',
+    height: '700px',
+  },
+};
+
 export function NotFoundPage(): JSX.Element {
   return(
     <Fragment>
@@ -19,13 +29,3 @@ export function NotFoundPage(): JSX.Element {
     </Fragment>
   );
 }
-
-const styles: { container: React.CSSProperties } = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    fontSize: '45px',
-    height: '700px',
-  },
-};

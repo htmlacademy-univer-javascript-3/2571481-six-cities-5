@@ -1,10 +1,10 @@
-import React from 'react';
+import { memo } from 'react';
 import { Cities, City } from '@appTypes/city';
 import { useAppDispatch } from '@hooks/index';
 import { changeCity } from '@store/engine-process/engine-process';
 import { Link } from 'react-router-dom';
 
-const CitiesList = (): JSX.Element => {
+function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleCityChange = (city: City) => {
@@ -22,6 +22,7 @@ const CitiesList = (): JSX.Element => {
       ))}
     </ul>
   );
-};
+}
 
-export default React.memo(CitiesList, () => true);
+const MemoizedCitiesList = memo(CitiesList);
+export default MemoizedCitiesList;
