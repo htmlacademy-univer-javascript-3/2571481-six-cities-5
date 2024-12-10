@@ -1,7 +1,7 @@
 import Header from '@components/header';
 import Map from '@components/map';
 import { OffersList } from '@components/offersList';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '@hooks/index';
 import CitiesList from '@pages/main-pages/citiesList';
@@ -45,9 +45,9 @@ export function MainPage(): JSX.Element {
     return sorted;
   }, [currentCityOffers, selectedSort]);
 
-  const handleSortChange = (sort: string) => {
+  const handleSortChange = useCallback((sort: string) => {
     setSelectedSort(sort);
-  };
+  }, []);
 
   return (
     <div className="page page--gray page--main">

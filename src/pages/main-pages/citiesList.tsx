@@ -1,23 +1,28 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { Cities, City } from '@appTypes/city';
 import { useAppDispatch } from '@hooks/index';
 import { changeCity } from '@store/engine-process/engine-process';
-import { Link } from 'react-router-dom';
+
+const styles: { container: React.CSSProperties } = {
+  container: {
+    cursor: 'pointer',
+  },
+};
 
 function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handleCityChange = (city: City) => {
+  const handleCityChange = useCallback((city: City) => {
     dispatch(changeCity(city));
-  };
+  }, []);
 
   return (
     <ul className="locations__list tabs__list">
       {Cities.map((city) => (
         <li key={city.name} className="locations__item">
-          <Link className="locations__item-link tabs__item" onClick={() => handleCityChange(city)} to='/'>
+          <div className="locations__item-link tabs__item" onClick={() => handleCityChange(city)} style={styles.container}>
             <span>{city.name}</span>
-          </Link>
+          </div>
         </li>
       ))}
     </ul>
