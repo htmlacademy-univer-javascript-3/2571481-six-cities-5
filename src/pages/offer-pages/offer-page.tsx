@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { getNearbyOffers, getReviews, getSingleOffer, getSingleOfferDataLoadingStatus } from '@store/single-offer-data/single-offer-data.selectors';
 import { getAuthStatus } from '@store/user-process/user-process.selectors';
 import { redirectToRoute } from '@store/action';
+import Footer from '@components/footer';
 
 
 export function OfferPage(): JSX.Element {
@@ -143,6 +144,7 @@ export function OfferPage(): JSX.Element {
           </section>
         </div>
       </main>
+      <Footer/>
     </div>
   );
 }

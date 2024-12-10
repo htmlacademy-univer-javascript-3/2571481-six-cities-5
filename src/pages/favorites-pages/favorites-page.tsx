@@ -10,6 +10,7 @@ import { redirectToRoute } from '@store/action';
 import { changeCity } from '@store/engine-process/engine-process';
 import { getFavorites } from '@store/user-process/user-process.selectors';
 import { LoadingScreen } from '@pages/loading-screen/loading-screen';
+import Footer from '@components/footer';
 
 export function FavoritesPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -68,17 +69,7 @@ export function FavoritesPage(): JSX.Element {
             </section>) : (<FavoritesEmpty />)}
         </div>
       </main>
-      <footer className="footer container">
-        <Link className="footer__logo-link" to={AppRoute.MainPage}>
-          <img
-            className="footer__logo"
-            src="img/logo.svg"
-            alt="6 cities logo"
-            width="64"
-            height="33"
-          />
-        </Link>
-      </footer>
+      <Footer/>
     </div>
   );
 }
