@@ -1,4 +1,4 @@
-import { Header } from '@components/header';
+import Header from '@components/header';
 import { OffersList } from '@components/offersList';
 import { AppRoute, CardType } from '@const';
 import { useAppDispatch, useAppSelector } from '@hooks/index';

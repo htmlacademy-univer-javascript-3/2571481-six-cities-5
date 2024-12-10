@@ -1,11 +1,10 @@
-import { Header } from '@components/header';
+import Header from '@components/header';
 import Map from '@components/map';
 import { OffersList } from '@components/offersList';
-import { Cities } from '@appTypes/city';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '@hooks/index';
-import { CitiesList } from '@components/citiesList';
+import CitiesList from '@pages/main-pages/citiesList';
 import { Offers } from '@appTypes/offer';
 import { SortingForm } from './sorting-form';
 import { MainEmptyPage } from './main-empty-page';
@@ -18,33 +17,36 @@ export function MainPage(): JSX.Element {
   const city = useAppSelector(getCity);
 
   const [currentCityOffers, setCurrentCityOffers] = useState<Offers>([]);
-  const [filteredCityOffers, setFilteredCityOffers] = useState<Offers>([]);
+  const [selectedSort, setSelectedSort] = useState('Popular');
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   const activeOffer = offers.find((offer) => offer.id === activeOfferId);
+
   useEffect(() => {
     const filteredOffers = offers.filter((offer) => offer.city.name === city.name);
-    setFilteredCityOffers(filteredOffers);
     setCurrentCityOffers(filteredOffers);
   }, [city, offers]);
 
-  const handleSortChange = (selectedSort: string) => {
-    let sortedOffers = [...currentCityOffers];
+  const sortedOffers = useMemo(() => {
+    let sorted = [...currentCityOffers];
     switch (selectedSort) {
       case 'Price: low to high':
-        sortedOffers.sort((a, b) => a.price - b.price);
+        sorted.sort((a, b) => a.price - b.price);
         break;
       case 'Price: high to low':
-        sortedOffers.sort((a, b) => b.price - a.price);
+        sorted.sort((a, b) => b.price - a.price);
         break;
       case 'Top rated first':
-        sortedOffers.sort((a, b) => b.rating - a.rating);
+        sorted.sort((a, b) => b.rating - a.rating);
         break;
       default:
-        sortedOffers = [...filteredCityOffers];
         break;
     }
-    setCurrentCityOffers(sortedOffers);
+    return sorted;
+  }, [currentCityOffers, selectedSort]);
+
+  const handleSortChange = (selectedSort: string) => {
+    setSelectedSort(selectedSort);
   };
 
   return (
@@ -52,27 +54,32 @@ export function MainPage(): JSX.Element {
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <Header/>
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitiesList cities={Cities}/>
+            <CitiesList/>
           </section>
         </div>
         <div className="cities">
-          {currentCityOffers.length > 0 ?
+          {sortedOffers.length > 0 ? (
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{`${currentCityOffers.length} places to stay in ${city.name}`}</b>
-                <SortingForm onSortChange={handleSortChange}/>
-                <OffersList offers={currentCityOffers} onActiveOfferChange={setActiveOfferId} cardType={CardType.Cities} className='cities__places-list places__list tabs__content'/>
+                <b className="places__found">{`${sortedOffers.length} places to stay in ${city.name}`}</b>
+                <SortingForm onSortChange={handleSortChange} />
+                <OffersList
+                  offers={sortedOffers}
+                  onActiveOfferChange={setActiveOfferId}
+                  cardType={CardType.Cities}
+                  className="cities__places-list places__list tabs__content"
+                />
               </section>
               <div className="cities__right-section">
-                <Map city={city} offers={currentCityOffers} selectedOffer={activeOffer} className={'cities__map'}/>
+                <Map city={city} offers={sortedOffers} selectedOffer={activeOffer} className="cities__map" />
               </div>
-            </div> : <MainEmptyPage/>}
+            </div>) : <MainEmptyPage />}
         </div>
       </main>
     </div>

@@ -1,4 +1,4 @@
-import { Header } from '@components/header';
+import Header from '@components/header';
 import ReviewForm from '@components/review-form';
 import ReviewsList from '@components/reviewsList';
 import { Helmet } from 'react-helmet-async';

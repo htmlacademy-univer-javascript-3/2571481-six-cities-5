@@ -12,7 +12,7 @@ export function SortingForm({ onSortChange }: SortingFormProps): JSX.Element {
     'Popular',
     'Price: low to high',
     'Price: high to low',
-    'Top rated first'
+    'Top rated first',
   ];
 
   const handleSortSelection = (option: string) => {
