@@ -84,6 +84,7 @@ export const editFavoritesAction = createAsyncThunk<void, {offerId: string; isFa
     const {data} = await api.post<FullDataOffer>(`${APIRoute.Favorites}/${offerId}/${isFavorite ? 1 : 0}`);
     dispatch(updateFavoritesInOffers({ editedOffer: data }));
     dispatch(updateUserFavorites({editedOffer: data}));
+    dispatch(setSingleOffer({offer: data}));
   },
 );
 
