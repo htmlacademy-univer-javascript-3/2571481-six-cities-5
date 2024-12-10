@@ -1,38 +1,56 @@
-import { Header } from '@components/header';
+import Header from '@components/header';
 import ReviewForm from '@components/review-form';
 import ReviewsList from '@components/reviewsList';
 import { Helmet } from 'react-helmet-async';
 import Map from '@components/map';
 import { OffersList } from '@components/offersList';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
-import { AuthStatus, PlaceTypes } from '@const';
-import { OfferForMap, SingleOffer } from '@appTypes/offer';
+import { AppRoute, AuthStatus, CardType, PlaceTypes } from '@const';
+import { OfferForMap } from '@appTypes/offer';
 import { OfferGallery } from './offerGallery';
-import { fetchSingleOfferAction } from '@store/api-actions';
+import { editFavoritesAction, fetchSingleOfferAction } from '@store/api-actions';
 import { useParams } from 'react-router-dom';
 import { LoadingScreen } from '@pages/loading-screen/loading-screen';
 import { useEffect } from 'react';
+import { getNearbyOffers, getReviews, getSingleOffer, getSingleOfferDataLoadingStatus } from '@store/single-offer-data/single-offer-data.selectors';
+import { getAuthStatus } from '@store/user-process/user-process.selectors';
+import { redirectToRoute } from '@store/action';
+import Footer from '@components/footer';
 
 
 export function OfferPage(): JSX.Element {
 
   const offerId = useParams<{ id: string }>().id as string;
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (offerId) {
       dispatch(fetchSingleOfferAction({ offerId }));
     }
   }, [offerId, dispatch]);
 
-  const reviews = useAppSelector((state) => state.reviews);
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers).slice(0, 3);
-  const curentOffer = useAppSelector((state) => state.singleOffer) as SingleOffer;
-  const isAuthorised = useAppSelector((state) => state.authStatus) === AuthStatus.Auth;
+  const isAuth = useAppSelector(getAuthStatus) === AuthStatus.Auth;
+  const reviews = useAppSelector(getReviews);
+  const nearbyOffers = useAppSelector(getNearbyOffers).slice(0, 3);
+  const curentOffer = useAppSelector(getSingleOffer);
+  const isAuthorised = useAppSelector(getAuthStatus) === AuthStatus.Auth;
 
-  const isDataLoading = useAppSelector((state) => state.isSingleOfferDataLoading);
+  const isDataLoading = useAppSelector(getSingleOfferDataLoadingStatus);
   if (!curentOffer || isDataLoading) {
     return <LoadingScreen/>;
   }
+
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    if (isAuth) {
+      dispatch(editFavoritesAction({
+        offerId: curentOffer.id,
+        isFavorite: !curentOffer.isFavorite
+      }));
+    } else {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
+  };
 
   return (
     <div className="page">
@@ -53,11 +71,13 @@ export function OfferPage(): JSX.Element {
                 </div>}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{curentOffer.title}</h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button className={`offer__bookmark-button${curentOffer.isFavorite ? '--active' : ''} button`} type="button" onClick={handleClick}>
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span>
+                  {curentOffer.isFavorite ?
+                    <span className="visually-hidden">In bookmarks</span> :
+                    <span className="visually-hidden">To bookmarks</span>}
                 </button>
               </div>
               <div className="offer__rating rating">
@@ -120,10 +140,11 @@ export function OfferPage(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersList offers={nearbyOffers} onActiveOfferChange={()=>{}} className='near-places__list places__list'/>
+            <OffersList offers={nearbyOffers} onActiveOfferChange={()=>{}} cardType={CardType.Nearby} className='near-places__list places__list'/>
           </section>
         </div>
       </main>
+      <Footer/>
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import { useAppSelector } from '@hooks/index';
+import { getSingleOffer } from '@store/single-offer-data/single-offer-data.selectors';
+import { memo } from 'react';
 
 export function OfferGallery(): JSX.Element {
-  const images = useAppSelector((state) => state.singleOffer?.images) as string[];
+  const images = useAppSelector(getSingleOffer)?.images as string[];
 
   return (
     <div className="offer__gallery">
@@ -13,3 +15,6 @@ export function OfferGallery(): JSX.Element {
     </div>
   );
 }
+
+const MemoizedOfferGallery = memo(OfferGallery);
+export default MemoizedOfferGallery;

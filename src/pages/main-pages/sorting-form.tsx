@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 type SortingFormProps = {
   onSortChange: (selectedSort: string) => void;
 };
 
-export function SortingForm({ onSortChange }: SortingFormProps): JSX.Element {
+function SortingFormComponent({ onSortChange }: SortingFormProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState('Popular');
 
@@ -12,7 +12,7 @@ export function SortingForm({ onSortChange }: SortingFormProps): JSX.Element {
     'Popular',
     'Price: low to high',
     'Price: high to low',
-    'Top rated first'
+    'Top rated first',
   ];
 
   const handleSortSelection = (option: string) => {
@@ -51,3 +51,5 @@ export function SortingForm({ onSortChange }: SortingFormProps): JSX.Element {
     </form>
   );
 }
+
+export const SortingForm = memo(SortingFormComponent);

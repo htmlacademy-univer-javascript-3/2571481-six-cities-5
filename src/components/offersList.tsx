@@ -7,9 +7,10 @@ type OffersListProps = {
   offers: Offers;
   onActiveOfferChange: (offerId: string | null) => void;
   className: string;
+  cardType: CardType;
 };
 
-export function OffersList({offers, onActiveOfferChange, className} : OffersListProps) : JSX.Element {
+export function OffersList({offers, onActiveOfferChange, className, cardType} : OffersListProps) : JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export function OffersList({offers, onActiveOfferChange, className} : OffersList
           offer = {offer}
           onMouseEnter={() => handleMouseEnter(offer.id)}
           onMouseLeave={handleMouseLeave}
-          cardType={CardType.Cities}
+          cardType={cardType}
         />))}
     </div>
   );

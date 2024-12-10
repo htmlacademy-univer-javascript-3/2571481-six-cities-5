@@ -1,6 +1,10 @@
-import { AppRoute, CardImageWrapper, CardType } from '@const';
+import { AppRoute, AuthStatus, CardImageWrapper, CardType } from '@const';
 import { Offer } from '@appTypes/offer';
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@hooks/index';
+import { editFavoritesAction } from '@store/api-actions';
+import { redirectToRoute } from '@store/action';
+import { getAuthStatus } from '@store/user-process/user-process.selectors';
 
 type RentOfferCardProps = {
   offer: Offer;
@@ -10,6 +14,20 @@ type RentOfferCardProps = {
 }
 
 export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: RentOfferCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(getAuthStatus) === AuthStatus.Auth;
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    if (isAuth) {
+      dispatch(editFavoritesAction({
+        offerId: offer.id,
+        isFavorite: !offer.isFavorite
+      }));
+    } else {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
+  };
+
   return(
     <article
       className={`${cardType} place-card`}
@@ -37,11 +55,13 @@ export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: Ren
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button${offer.isFavorite && '--active'} button`} type="button">
+          <button className={`place-card__bookmark-button${offer.isFavorite && '--active'} button`} type="button" onClick={handleClick}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">In bookmarks</span>
+            {offer.isFavorite ?
+              <span className="visually-hidden">In bookmarks</span> :
+              <span className="visually-hidden">To bookmarks</span>}
           </button>
         </div>
         <div className="place-card__rating rating">
