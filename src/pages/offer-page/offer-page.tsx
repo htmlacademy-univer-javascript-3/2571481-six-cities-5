@@ -17,8 +17,6 @@ import { getNearbyOffers, getReviews, getSingleOffer, getSingleOfferDataLoadingS
 import { getAuthStatus } from '@store/user-process/user-process.selectors';
 import { redirectToRoute } from '@store/action';
 
-
-
 function OfferPage(): JSX.Element {
 
   const offerId = useParams<{ id: string }>().id as string;
