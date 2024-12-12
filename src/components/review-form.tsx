@@ -1,6 +1,9 @@
-import { useAppDispatch } from '@hooks/index';
+import React from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { postReviewAction } from '@store/api-actions';
-import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
+import { setFormAcceptedStatus } from '@store/single-offer-data/single-offer-data';
+import { getSingleOfferFormAcceptedStatus, getSingleOfferReviewPostingStatus } from '@store/single-offer-data/single-offer-data.selectors';
 
 const titlesForRate = {
   1: 'terribly',
@@ -14,19 +17,20 @@ type ReviewFormProps = {
   offerId: string;
 }
 
-export default function ReviewForm({ offerId } : ReviewFormProps): JSX.Element {
+function ReviewFormComponent({ offerId } : ReviewFormProps): JSX.Element {
   const [formData, setFormData] = useState({
     review: '',
     rating: 0
   });
+  const isFormAccepted = useAppSelector(getSingleOfferFormAcceptedStatus);
+  const isPosting = useAppSelector(getSingleOfferReviewPostingStatus);
   const [isValid, setIsValid] = useState(false);
-  const [isPosting, setIsPosting] = useState(false);
   const dispatch = useAppDispatch();
 
-  const handleFieldChange = (evt: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
-    const {name, value} = evt.target;
-    setFormData({...formData, [name]: value});
-  };
+  const handleFieldChange = useCallback((evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = evt.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  }, []);
 
   useEffect(() => {
     if(formData.review.length > 50 && formData.review.length < 301 && formData.rating !== 0) {
@@ -36,21 +40,26 @@ export default function ReviewForm({ offerId } : ReviewFormProps): JSX.Element {
     }
   }, [formData]);
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const handleSubmit = useCallback(
+    (evt: React.FormEvent<HTMLFormElement>) => {
+      evt.preventDefault();
 
-    setIsPosting(true);
-    dispatch(postReviewAction({
-      comment: formData.review,
-      rating: formData.rating,
-      id: offerId,
-    }));
-    setFormData({
-      review: '',
-      rating: 0,
-    });
-    setIsPosting(false);
-  };
+      dispatch(postReviewAction({
+        comment: formData.review,
+        rating: formData.rating,
+        id: offerId
+      }));
+
+      if (isFormAccepted) {
+        setFormData({
+          review: '',
+          rating: 0
+        });
+        dispatch(setFormAcceptedStatus(false));
+      }
+    },
+    [dispatch, formData, isFormAccepted, offerId]
+  );
 
   function starsRender(rating: 1|2|3|4|5) {
     const title = titlesForRate[rating];
@@ -86,3 +95,5 @@ export default function ReviewForm({ offerId } : ReviewFormProps): JSX.Element {
     </form>
   );
 }
+
+export const ReviewForm = React.memo(ReviewFormComponent);

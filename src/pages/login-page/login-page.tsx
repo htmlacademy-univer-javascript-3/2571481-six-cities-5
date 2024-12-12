@@ -1,19 +1,22 @@
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { LogInForm } from './login-form';
-import { useAppDispatch, useAppSelector } from '@hooks/index';
-import { AppRoute, AuthStatus } from '@const';
-import { redirectToRoute } from '@store/action';
-import { getAuthStatus } from '@store/user-process/user-process.selectors';
 import LoginHeader from './login-header';
 import LoginPicSection from './login-pic-section';
+import LogInForm from './login-form';
+import { useAppSelector } from '@hooks/index';
+import { AppRoute, AuthStatus } from '@const';
+import { getAuthStatus } from '@store/user-process/user-process.selectors';
 
-export function LoginPage(): JSX.Element{
-  const dispatch = useAppDispatch();
+function LoginPage(): JSX.Element{
+  const navigateTo = useNavigate();
   const authStatus = useAppSelector(getAuthStatus);
 
-  if(authStatus === AuthStatus.Auth) {
-    dispatch(redirectToRoute(AppRoute.MainPage));
-  }
+  useEffect(() => {
+    if(authStatus === AuthStatus.Auth) {
+      navigateTo(AppRoute.MainPage);
+    }
+  }, [navigateTo, authStatus]);
 
   return(
     <div className="page page--gray page--login">
@@ -33,3 +36,5 @@ export function LoginPage(): JSX.Element{
     </div>
   );
 }
+
+export default LoginPage;

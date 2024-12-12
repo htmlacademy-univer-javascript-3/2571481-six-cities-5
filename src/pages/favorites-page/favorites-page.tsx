@@ -1,18 +1,19 @@
-import Header from '@components/header';
-import { OffersList } from '@components/offersList';
-import { AppRoute, CardType } from '@const';
-import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { FavoritesEmpty } from './favorites-empty-page';
+import FavoritesEmpty from './favorites-empty-page';
+import Header from '@components/header';
+import OffersList from '@components/offers-list';
+import Footer from '@components/footer';
+import { AppRoute, CardType } from '@const';
+import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { Cities, City } from '@appTypes/city';
 import { redirectToRoute } from '@store/action';
 import { changeCity } from '@store/engine-process/engine-process';
 import { getFavorites } from '@store/user-process/user-process.selectors';
-import { LoadingScreen } from '@pages/loading-screen/loading-screen';
-import Footer from '@components/footer';
+import LoadingScreen from '@pages/loading-screen/loading-screen';
 
-export function FavoritesPage(): JSX.Element {
+
+function FavoritesPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(getFavorites);
   const cities = Cities;
@@ -73,3 +74,5 @@ export function FavoritesPage(): JSX.Element {
     </div>
   );
 }
+
+export default FavoritesPage;

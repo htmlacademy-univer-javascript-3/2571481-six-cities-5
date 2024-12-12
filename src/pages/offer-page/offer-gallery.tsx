@@ -1,6 +1,6 @@
+import { memo } from 'react';
 import { useAppSelector } from '@hooks/index';
 import { getSingleOffer } from '@store/single-offer-data/single-offer-data.selectors';
-import { memo } from 'react';
 
 export function OfferGallery(): JSX.Element {
   const images = useAppSelector(getSingleOffer)?.images as string[];

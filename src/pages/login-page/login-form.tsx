@@ -1,8 +1,8 @@
-import { useAppDispatch } from '@hooks/index';
 import { FormEvent, useState } from 'react';
+import { useAppDispatch } from '@hooks/index';
 import { loginAction } from '@store/api-actions';
 
-export function LogInForm(): JSX.Element {
+function LogInForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     email: '',
@@ -39,3 +39,5 @@ export function LogInForm(): JSX.Element {
     </form>
   );
 }
+
+export default LogInForm;

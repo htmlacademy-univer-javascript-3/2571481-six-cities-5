@@ -1,6 +1,6 @@
-import { Offers } from '@appTypes/offer';
-import { RentOfferCard } from './rent-offer-card';
 import { useEffect, useState } from 'react';
+import RentOfferCard from './rent-offer-card';
+import { Offers } from '@appTypes/offer';
 import { CardType } from '@const';
 
 type OffersListProps = {
@@ -10,7 +10,7 @@ type OffersListProps = {
   cardType: CardType;
 };
 
-export function OffersList({offers, onActiveOfferChange, className, cardType} : OffersListProps) : JSX.Element {
+function OffersList({offers, onActiveOfferChange, className, cardType} : OffersListProps) : JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -38,3 +38,5 @@ export function OffersList({offers, onActiveOfferChange, className, cardType} : 
     </div>
   );
 }
+
+export default OffersList;

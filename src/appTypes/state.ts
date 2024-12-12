@@ -1,15 +1,12 @@
 import { store } from '@store/index';
-
+import { AuthStatus } from '@const';
 import { Offers, SingleOffer } from './offer';
 import { Reviews } from './review';
-import { AuthStatus } from '@const';
 import { City } from './city';
 import { User } from './user';
 
-
 export type EngineProcess = {
     city: City;
-    error: string | null;
 };
 
 export type UserProcess = {
@@ -24,6 +21,8 @@ export type SingleOfferData = {
     nearbyOffers: Offers;
     reviews: Reviews;
     isSingleOfferDataLoading: boolean;
+    isReviewPosting: boolean;
+    isFormAccepted: boolean;
 };
 
 export type OffersData = {

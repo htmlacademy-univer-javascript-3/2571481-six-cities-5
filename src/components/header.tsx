@@ -1,10 +1,10 @@
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '@const';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { logoutAction } from '@store/api-actions';
 import { getFavoritesCount } from '@store/offers-data/offers-data.selectors';
 import { getAuthStatus, getUser } from '@store/user-process/user-process.selectors';
-import { Link } from 'react-router-dom';
 
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();

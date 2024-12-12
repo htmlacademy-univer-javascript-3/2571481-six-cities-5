@@ -1,7 +1,7 @@
-import Footer from '@components/footer';
-import Header from '@components/header';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '@components/footer';
+import Header from '@components/header';
 
 const styles: { container: React.CSSProperties } = {
   container: {
@@ -13,7 +13,7 @@ const styles: { container: React.CSSProperties } = {
   },
 };
 
-export function NotFoundPage(): JSX.Element {
+function NotFoundPage(): JSX.Element {
   return(
     <Fragment>
       <Header/>
@@ -29,3 +29,5 @@ export function NotFoundPage(): JSX.Element {
     </Fragment>
   );
 }
+
+export default NotFoundPage;

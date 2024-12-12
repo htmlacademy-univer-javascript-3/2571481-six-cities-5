@@ -5,7 +5,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: EngineProcess = {
   city: Cities[0],
-  error: null,
 };
 
 export const engineProcess = createSlice({
@@ -15,10 +14,7 @@ export const engineProcess = createSlice({
     changeCity: (state, action: PayloadAction<City>) => {
       state.city = action.payload;
     },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
-    },
   },
 });
 
-export const { changeCity, setError } = engineProcess.actions;
+export const { changeCity } = engineProcess.actions;

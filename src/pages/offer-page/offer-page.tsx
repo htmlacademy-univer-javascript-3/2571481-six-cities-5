@@ -1,24 +1,23 @@
-import Header from '@components/header';
-import ReviewForm from '@components/review-form';
-import ReviewsList from '@components/reviewsList';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { OfferGallery } from './offer-gallery';
+import Header from '@components/header';
+import { ReviewForm } from '@components/review-form';
+import ReviewsList from '@components/reviews-list';
 import Map from '@components/map';
-import { OffersList } from '@components/offersList';
+import OffersList from '@components/offers-list';
+import Footer from '@components/footer';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { AppRoute, AuthStatus, CardType, PlaceTypes } from '@const';
 import { OfferForMap } from '@appTypes/offer';
-import { OfferGallery } from './offerGallery';
 import { editFavoritesAction, fetchSingleOfferAction } from '@store/api-actions';
-import { useParams } from 'react-router-dom';
-import { LoadingScreen } from '@pages/loading-screen/loading-screen';
-import { useEffect } from 'react';
+import LoadingScreen from '@pages/loading-screen/loading-screen';
 import { getNearbyOffers, getReviews, getSingleOffer, getSingleOfferDataLoadingStatus } from '@store/single-offer-data/single-offer-data.selectors';
 import { getAuthStatus } from '@store/user-process/user-process.selectors';
 import { redirectToRoute } from '@store/action';
-import Footer from '@components/footer';
 
-
-export function OfferPage(): JSX.Element {
+function OfferPage(): JSX.Element {
 
   const offerId = useParams<{ id: string }>().id as string;
   const dispatch = useAppDispatch();
@@ -33,7 +32,6 @@ export function OfferPage(): JSX.Element {
   const reviews = useAppSelector(getReviews);
   const nearbyOffers = useAppSelector(getNearbyOffers).slice(0, 3);
   const curentOffer = useAppSelector(getSingleOffer);
-  const isAuthorised = useAppSelector(getAuthStatus) === AuthStatus.Auth;
 
   const isDataLoading = useAppSelector(getSingleOfferDataLoadingStatus);
   if (!curentOffer || isDataLoading) {
@@ -131,7 +129,7 @@ export function OfferPage(): JSX.Element {
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews}/>
-                {isAuthorised && <ReviewForm offerId={offerId}/>}
+                {isAuth && <ReviewForm offerId={offerId}/>}
               </section>
             </div>
           </div>
@@ -148,3 +146,5 @@ export function OfferPage(): JSX.Element {
     </div>
   );
 }
+
+export default OfferPage;
