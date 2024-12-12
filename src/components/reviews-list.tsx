@@ -1,11 +1,11 @@
-import { Reviews } from '@appTypes/review';
 import ReviewsItem from './reviews-item';
+import { Reviews } from '@appTypes/review';
 
 type ReviewsListProps = {
   reviews: Reviews;
 };
 
-export default function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
+function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
   return (
     <ul className="reviews__list">
       {[...reviews]
@@ -17,3 +17,5 @@ export default function ReviewsList({ reviews }: ReviewsListProps): JSX.Element 
     </ul>
   );
 }
+
+export default ReviewsList;

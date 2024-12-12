@@ -11,7 +11,7 @@ const styles: { container: React.CSSProperties } = {
   },
 };
 
-export function LoadingScreen(): JSX.Element {
+function LoadingScreen(): JSX.Element {
   return (
     <div style={styles.container}>
       <p>Loading...</p>
@@ -19,3 +19,5 @@ export function LoadingScreen(): JSX.Element {
     </div>
   );
 }
+
+export default LoadingScreen;

@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { AppRoute } from '@const';
 import { Link } from 'react-router-dom';
+import { AppRoute } from '@const';
 
 function LoginHeader(): JSX.Element {
   return (

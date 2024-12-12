@@ -1,17 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {AxiosInstance} from 'axios';
+import { setFavoritesCount, setOffersList, updateFavoritesInOffers } from './offers-data/offers-data';
+import { setNearbyOffers, setReviews, setSingleOffer } from './single-offer-data/single-offer-data';
+import { setFavoriteOffers, setUser, updateUserFavorites } from './user-process/user-process';
+import { redirectToRoute} from './action';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '@appTypes/state';
 import { APIRoute, AppRoute } from '@const';
 import { FullDataOffer, Offers, SingleOffer } from '@appTypes/offer';
-import { redirectToRoute} from './action';
 import { AuthData, User } from '@appTypes/user';
-import { saveToken, dropToken } from '@services/token';
 import { ReviewData, Reviews } from '@appTypes/review';
-import { setFavoritesCount, setOffersList, updateFavoritesInOffers } from './offers-data/offers-data';
-import { setNearbyOffers, setReviews, setSingleOffer } from './single-offer-data/single-offer-data';
-import { setFavoriteOffers, setUser, updateUserFavorites } from './user-process/user-process';
-
+import { saveToken, dropToken } from '@services/token';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

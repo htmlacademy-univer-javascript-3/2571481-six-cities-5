@@ -1,10 +1,10 @@
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { Cities } from '@appTypes/city';
 import { AppRoute } from '@const';
 import { useAppDispatch } from '@hooks/index';
 import { redirectToRoute } from '@store/action';
 import { changeCity } from '@store/engine-process/engine-process';
-import { memo } from 'react';
-import { Link } from 'react-router-dom';
 
 function LoginPicSection(): JSX.Element {
   const dispatch = useAppDispatch();

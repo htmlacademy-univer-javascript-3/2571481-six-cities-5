@@ -1,9 +1,9 @@
+import React from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { postReviewAction } from '@store/api-actions';
 import { setFormAcceptedStatus } from '@store/single-offer-data/single-offer-data';
 import { getSingleOfferFormAcceptedStatus, getSingleOfferReviewPostingStatus } from '@store/single-offer-data/single-offer-data.selectors';
-import React from 'react';
-import { Fragment, useCallback, useEffect, useState } from 'react';
 
 const titlesForRate = {
   1: 'terribly',

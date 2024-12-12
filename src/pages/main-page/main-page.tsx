@@ -1,18 +1,18 @@
-import Header from '@components/header';
-import Map from '@components/map';
-import { OffersList } from '@components/offersList';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useAppSelector } from '@hooks/index';
-import CitiesList from '@pages/main-pages/citiesList';
-import { Offers } from '@appTypes/offer';
 import { SortingForm } from './sorting-form';
-import { MainEmptyPage } from './main-empty-page';
+import MainEmptyPage from './main-empty-page';
+import Header from '@components/header';
+import Map from '@components/map';
+import OffersList from '@components/offers-list';
+import { useAppSelector } from '@hooks/index';
+import CitiesList from '@pages/main-page/citiesList';
+import { Offers } from '@appTypes/offer';
 import { CardType } from '@const';
 import { getOffers } from '@store/offers-data/offers-data.selectors';
 import { getCity } from '@store/engine-process/engine-process.selectors';
 
-export function MainPage(): JSX.Element {
+function MainPage(): JSX.Element {
   const offers = useAppSelector(getOffers);
   const city = useAppSelector(getCity);
 
@@ -85,3 +85,5 @@ export function MainPage(): JSX.Element {
     </div>
   );
 }
+
+export default MainPage;

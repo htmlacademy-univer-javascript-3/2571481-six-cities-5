@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthStatus, NameSpace } from '@const';
 import { UserProcess } from '@appTypes/state';
 import { User } from '@appTypes/user';
-import { checkAuthAction, loginAction, logoutAction } from '@store/api-actions';
 import { Offer, Offers } from '@appTypes/offer';
+import { checkAuthAction, loginAction, logoutAction } from '@store/api-actions';
 
 const initialState: UserProcess = {
   authStatus: AuthStatus.NotAuth,

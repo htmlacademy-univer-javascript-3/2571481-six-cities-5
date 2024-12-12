@@ -1,6 +1,6 @@
-import { AppRoute, AuthStatus, CardImageWrapper, CardType } from '@const';
-import { Offer } from '@appTypes/offer';
 import { Link } from 'react-router-dom';
+import { Offer } from '@appTypes/offer';
+import { AppRoute, AuthStatus, CardImageWrapper, CardType } from '@const';
 import { useAppDispatch, useAppSelector } from '@hooks/index';
 import { editFavoritesAction } from '@store/api-actions';
 import { redirectToRoute } from '@store/action';
@@ -13,7 +13,7 @@ type RentOfferCardProps = {
   cardType: CardType;
 }
 
-export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: RentOfferCardProps): JSX.Element {
+function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: RentOfferCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(getAuthStatus) === AuthStatus.Auth;
   const handleClick = (event: React.MouseEvent) => {
@@ -78,3 +78,5 @@ export function RentOfferCard({offer, onMouseEnter, onMouseLeave, cardType}: Ren
     </article>
   );
 }
+
+export default RentOfferCard;

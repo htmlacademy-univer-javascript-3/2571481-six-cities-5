@@ -4,7 +4,7 @@ type ReviewsItemProps = {
   review: Review;
 };
 
-export default function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
+function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
   const { rating, user, date, comment } = review;
 
   const textDate = new Date(date).toLocaleDateString('en-US', {
@@ -34,3 +34,5 @@ export default function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
     </li>
   );
 }
+
+export default ReviewsItem;
