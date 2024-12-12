@@ -7,3 +7,5 @@ export const getSingleOffer = (state: State): SingleOffer | null => state[NameSp
 export const getNearbyOffers = (state: State): Offers => state[NameSpace.SingleOffer].nearbyOffers;
 export const getReviews = (state: State): Reviews => state[NameSpace.SingleOffer].reviews;
 export const getSingleOfferDataLoadingStatus = (state: State): boolean => state[NameSpace.SingleOffer].isSingleOfferDataLoading;
+export const getSingleOfferFormAcceptedStatus = (state: State): boolean => state[NameSpace.SingleOffer].isFormAccepted;
+export const getSingleOfferReviewPostingStatus = (state: State): boolean => state[NameSpace.SingleOffer].isReviewPosting;

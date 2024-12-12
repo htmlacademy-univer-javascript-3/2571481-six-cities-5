@@ -24,6 +24,8 @@ export type SingleOfferData = {
     nearbyOffers: Offers;
     reviews: Reviews;
     isSingleOfferDataLoading: boolean;
+    isReviewPosting: boolean;
+    isFormAccepted: boolean;
 };
 
 export type OffersData = {

@@ -1,5 +1,5 @@
 import Header from '@components/header';
-import ReviewForm from '@components/review-form';
+import { ReviewForm } from '@components/review-form';
 import ReviewsList from '@components/reviewsList';
 import { Helmet } from 'react-helmet-async';
 import Map from '@components/map';
@@ -33,7 +33,6 @@ export function OfferPage(): JSX.Element {
   const reviews = useAppSelector(getReviews);
   const nearbyOffers = useAppSelector(getNearbyOffers).slice(0, 3);
   const curentOffer = useAppSelector(getSingleOffer);
-  const isAuthorised = useAppSelector(getAuthStatus) === AuthStatus.Auth;
 
   const isDataLoading = useAppSelector(getSingleOfferDataLoadingStatus);
   if (!curentOffer || isDataLoading) {
@@ -131,7 +130,7 @@ export function OfferPage(): JSX.Element {
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews}/>
-                {isAuthorised && <ReviewForm offerId={offerId}/>}
+                {isAuth && <ReviewForm offerId={offerId}/>}
               </section>
             </div>
           </div>
