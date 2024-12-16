@@ -21,16 +21,23 @@ function OfferPage(): JSX.Element {
 
   const offerId = useParams<{ id: string }>().id as string;
   const dispatch = useAppDispatch();
+  const offers = useAppSelector((state) => state.OFFERS.offersList);
 
   useEffect(() => {
     if (offerId) {
-      dispatch(fetchSingleOfferAction({ offerId }));
+      const isOfferValid = offers.some((offer) => offer.id === offerId);
+
+      if (isOfferValid) {
+        dispatch(fetchSingleOfferAction({ offerId }));
+      } else {
+        dispatch(redirectToRoute(AppRoute.NotFound));
+      }
     }
-  }, [offerId, dispatch]);
+  }, [offerId, offers, dispatch]);
 
   const isAuth = useAppSelector(getAuthStatus) === AuthStatus.Auth;
   const reviews = useAppSelector(getReviews);
-  const nearbyOffers = useAppSelector(getNearbyOffers).slice(0, 3);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
   const curentOffer = useAppSelector(getSingleOffer);
 
   const isDataLoading = useAppSelector(getSingleOfferDataLoadingStatus);
