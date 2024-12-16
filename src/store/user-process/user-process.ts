@@ -19,7 +19,7 @@ export const userProcess = createSlice({
     setAuthStatus: (state, action: PayloadAction<AuthStatus>) => {
       state.authStatus = action.payload;
     },
-    setUser: (state, action: PayloadAction<User>) => {
+    setUser: (state, action: PayloadAction<User|null>) => {
       state.user = action.payload;
     },
     setFavoriteOffers: (state, action: PayloadAction<Offers>) => {
