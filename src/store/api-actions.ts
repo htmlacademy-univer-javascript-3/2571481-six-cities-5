@@ -124,6 +124,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const {data} = await api.post<User>(APIRoute.Login, payload);
     saveToken(data.token);
     dispatch(setUser(data));
+    dispatch(fetchOffersAction());
     dispatch(redirectToRoute(AppRoute.MainPage));
   },
 );
@@ -137,6 +138,8 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
+    dispatch(fetchOffersAction());
+    dispatch(setUser(null));
     dispatch(redirectToRoute(AppRoute.MainPage));
   },
 );
